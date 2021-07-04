@@ -1,0 +1,21 @@
+version: '3'
+services:
+  pendragon-api-development:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '5000:5000'
+    container_name: pendragon-api-development
+    volumes:
+      - ./:/usr/src/app/api
+      - /usr/src/app/api/node_modules
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: pendragon
+    volumes:
+      - ./data:/data/db

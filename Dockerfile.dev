@@ -1,0 +1,14 @@
+FROM node:14
+
+WORKDIR /usr/src/app/api
+
+COPY package.json ./
+COPY yarn.lock ./
+
+ENV MONGO=mongodb://mongo:27017/pendragon
+
+RUN yarn
+
+EXPOSE 5000
+
+CMD ["yarn", "dev"]

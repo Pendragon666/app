@@ -1,0 +1,147 @@
+
+[07/01/2021 18:57:39][SUCCESS]: Server stared on port: 5000
+[07/01/2021 18:58:39][ERROR]: Problem connecting with database, check mongodb connection string
+[07/01/2021 18:58:39][SUCCESS]: Server stared on port: 5000
+[07/01/2021 18:59:06][SUCCESS]: Server stared on port: 5000
+[07/01/2021 18:59:35][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:00:51][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:03:43][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:03:49][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:04:43][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:19:46][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:19:54][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:21:32][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:21:39][SUCCESS]: Server stared on port: 5000
+[07/01/2021 19:21:56][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:50:06][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:50:32][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:51:46][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:52:47][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:53:01][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:53:17][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:53:44][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:55:07][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:55:31][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:55:34][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:55:57][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:56:12][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:56:29][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:56:37][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:56:40][SUCCESS]: Server stared on port: 5000
+[07/02/2021 01:59:01][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:29:35][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:30:28][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:31:16][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:31:26][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:31:31][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:34:14][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:35:23][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:35:49][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:36:04][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:36:36][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:37:33][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:38:17][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:38:32][SUCCESS]: Server stared on port: 5000
+[07/02/2021 02:38:39][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:01:49][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:01:53][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:42:29][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:42:56][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:43:11][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:43:41][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:44:04][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:46:00][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:46:13][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:46:32][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:46:43][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:53:03][SUCCESS]: Server stared on port: 5000
+[07/02/2021 23:53:39][FIX]: createUser change
+[07/03/2021 00:01:22][SUCCESS]: Server stared on port: 5000
+[07/03/2021 00:02:05][SUCCESS]: Server stared on port: 5000
+[07/03/2021 00:02:08][FIX]: createUser change
+[07/03/2021 00:02:08][FIX]: 11000
+[07/03/2021 00:02:56][SUCCESS]: Server stared on port: 5000
+[07/03/2021 00:02:58][FIX]: createUser change
+[07/03/2021 00:03:12][SUCCESS]: Server stared on port: 5000
+[07/03/2021 00:03:14][FIX]: createUser change
+[07/03/2021 00:04:21][SUCCESS]: Server stared on port: 5000
+[07/04/2021 09:49:41][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 09:49:41][SUCCESS]: Server stared on port: 5000
+[07/04/2021 09:49:47][SUCCESS]: Server stared on port: 5000
+[07/04/2021 09:50:04][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:28:05][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:28:05][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:28:58][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:28:58][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:29:18][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:29:18][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:29:59][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:29:59][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:30:31][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:30:31][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:30:38][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:30:38][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:32:29][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:32:29][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:34:51][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:34:51][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:35:07][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:35:07][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:37:16][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:37:16][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:38:30][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:38:30][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:39:41][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:39:41][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:40:35][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:40:35][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:41:01][FIX]: createUser change
+[07/04/2021 10:44:06][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:44:06][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:48:47][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:48:47][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:51:07][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:51:07][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:53:01][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:53:01][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:53:18][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:53:18][SUCCESS]: Server stared on port: 5000
+[07/04/2021 10:54:43][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 10:54:43][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:01:22][FIX]: createUser change
+[07/04/2021 11:02:50][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:02:51][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:03:54][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:03:54][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:04:35][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:04:35][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:04:40][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:04:40][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:04:42][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:04:42][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:05:14][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:05:14][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:05:26][SUCCESS]: Server stared on port: 5000
+[07/04/2021 11:05:26][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:06:39][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 11:06:39][SUCCESS]: Server stared on port: 5000
+[07/04/2021 12:23:48][FIX]: createUser change
+[07/04/2021 12:26:57][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 12:26:57][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:01:12][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:01:12][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:02:34][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:02:34][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:03:04][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:03:04][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:03:48][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:03:48][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:04:43][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:04:43][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:05:04][ERROR]: Problem connecting with database, check mongodb connection string
+[07/04/2021 13:05:04][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:06:17][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:07:00][FIX]: createUser change
+[07/04/2021 13:07:20][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:07:22][SUCCESS]: Server stared on port: 5000
+[07/04/2021 13:07:24][SUCCESS]: Server stared on port: 5000

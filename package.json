@@ -1,0 +1,42 @@
+{
+  "name": "pendragon-api",
+  "version": "0.0.1",
+  "main": "app.ts",
+  "repository": "git@github.com:Pendragon666/API.git",
+  "author": "Pendragon",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "watch": "tsc -w",
+    "start": "node dist/app.js",
+    "dev": "nodemon dist/app.js",
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint src/**/*.ts --fix",
+    "test": "jest"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.0"
+  },
+  "devDependencies": {
+    "@harukazeorg/logger": "^0.0.5",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^15.12.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
+    "jest": "^27.0.6",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.9",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.4"
+  }
+}
