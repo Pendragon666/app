@@ -30,10 +30,10 @@ export default class MessageService {
     const messages = await Message.find({ ip }).sort('-lastRequested').limit(retries);
     if (messages.length === retries) {
       if (new Date(messages[retries - 1].toJSON().lastRequested.getTime() + 2 * 60000) < new Date()) {
-        return true;
+        return false;
       }
-      return false;
+      return true;
     }
-    return false;
+    return true;
   }
 }

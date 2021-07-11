@@ -7,9 +7,9 @@ interface SMS {
 
 export const requestSms = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
-    const limiter = await MessageService.setLimiter(req.ip, 5);
+    const checkLimit = await MessageService.setLimiter(req.ip, 5);
 
-    if (limiter) {
+    if (checkLimit) {
       const { number } = req.body as SMS;
       const code = MessageService.generateNumber();
       const { _id } = await MessageService.saveNumber(code, req.ip);
