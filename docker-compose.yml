@@ -12,6 +12,7 @@ services:
       SMS_AUTH_TOKEN: '${SMS_AUTH_TOKEN}'
     ports:
       - '5000:5000'
+    network_mode: 'host'
   mongo:
     image: mongo
     restart: always
