@@ -21,7 +21,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "skipLibCheck": true
     // "baseUrl": "."
   },
   "exclude": ["node_modules"],

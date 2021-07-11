@@ -9,7 +9,7 @@ services:
     container_name: pendragon-api-development
     volumes:
       - ./:/usr/src/app/api
-      - /usr/src/app/api/node_modules
+      - ./node_modules:/usr/src/app/api/node_modules
   mongo:
     image: mongo
     restart: always

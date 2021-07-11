@@ -6,8 +6,11 @@ COPY package.json ./
 COPY yarn.lock ./
 
 ENV MONGO=mongodb://mongo:27017/pendragon
+ENV NODE_ENV=development
+ENV TOKEN_SECRET=test
+ENV REFRESH_TOKEN_SECRET=test
 
-RUN yarn
+# RUN yarn
 
 EXPOSE 5000
 

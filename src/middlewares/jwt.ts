@@ -1,0 +1,41 @@
+import jwt from 'jsonwebtoken';
+import { NextFunction, Request, Response } from 'express';
+import { UserI } from '../types/User';
+
+export class JWT {
+  public static createToken(user: UserI) {
+    const token = jwt.sign(user, process.env.TOKEN_SECRET!, {
+      expiresIn: '1m',
+    });
+    return token;
+  }
+
+  public static createRefreshToken(user: UserI) {
+    const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN_SECRET!, {
+      expiresIn: '365d',
+    });
+    return refreshToken;
+  }
+
+  public static verifyToken(req: Request, _: Response, next: NextFunction) {
+    const token = req.get('authorization');
+    if (token) {
+      jwt.verify(token, process.env.TOKEN_SECRET!, (_, user) => {
+        if (user) {
+          //@ts-ignore
+          req.user = user;
+        }
+      });
+      return next();
+    }
+    return next();
+  }
+
+  public static checkAuth(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    if (req.user) {
+      return next();
+    }
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+}
