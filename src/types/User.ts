@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface UserDoc extends Document {
-  _id?: string;
+  _id: string;
   username: string;
   password: string;
   birthday?: Date;
@@ -11,11 +11,12 @@ export interface UserDoc extends Document {
 }
 
 export interface UserI {
-  _id?: string;
+  _id: string;
   username: string;
   password: string;
   birthday?: Date;
   email: string;
   number: string;
   verified?: boolean;
+  code: number;
 }

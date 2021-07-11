@@ -1,16 +1,24 @@
 version: '3'
 services:
   pendragon-api-development:
+    # network_mode: 'host'
     build:
       context: ./
       dockerfile: ./Dockerfile.dev
     ports:
       - '5000:5000'
-    network_mode: 'host'
     container_name: pendragon-api-development
     volumes:
       - ./:/usr/src/app/api
       - ./node_modules:/usr/src/app/api/node_modules
+    environment:
+      PORT: '${PORT}'
+      MONGO: '${MONGO}'
+      NODE_ENV: '${NODE_ENV}'
+      TOKEN_SECRET: '${TOKEN_SECRET}'
+      REFRESH_TOKEN_SECRET: '${REFRESH_TOKEN_SECRET}'
+      SMS_SID: '${SMS_SID}'
+      SMS_AUTH_TOKEN: '${SMS_AUTH_TOKEN}'
   mongo:
     image: mongo
     restart: always

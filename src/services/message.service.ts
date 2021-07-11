@@ -12,7 +12,7 @@ export default class MessageService {
   public static async saveNumber(number: number, ip: string) {
     const send = await Message.create({
       value: number,
-      date: new Date(),
+      lastRequested: new Date(),
       ip,
     });
     return send.toJSON();
@@ -20,13 +20,20 @@ export default class MessageService {
 
   public static async checkNumber(number: number, _id: string) {
     const code = await Message.findOne({ _id });
-    if (code?.value === number) {
+    if (code?.toJSON().value === number) {
       return true;
     }
     return false;
   }
 
-  public static async setLimiter(_ip: string, _retriest: number) {
+  public static async setLimiter(ip: string, retries: number): Promise<boolean> {
+    const messages = await Message.find({ ip }).sort('-lastRequested').limit(retries);
+    if (messages.length === retries) {
+      if (new Date(messages[retries - 1].toJSON().lastRequested.getTime() + 2 * 60000) < new Date()) {
+        return true;
+      }
+      return false;
+    }
     return false;
   }
 }

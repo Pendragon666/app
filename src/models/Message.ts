@@ -4,7 +4,7 @@ import { MessageService } from '../types/Message';
 const MessageSchema = new Schema<MessageService, Model<MessageService>, MessageService>(
   {
     value: { type: Number, required: true },
-    lastRequsted: Date,
+    lastRequested: Date,
     ip: { type: String, required: true },
   },
   {

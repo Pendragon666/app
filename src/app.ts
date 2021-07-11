@@ -5,7 +5,7 @@ import fs from 'fs';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
 import { logError, logSuccess, setPath } from '@harukazeorg/logger';
-import { AuthRouter } from './routes';
+import { AuthRouter, SmsRouter } from './routes';
 import { errorMiddleware, notFoundMiddlware } from './middlewares/handlers';
 
 import SwaggerUI from 'swagger-ui-express';
@@ -35,8 +35,9 @@ config();
   const port = process.env.PORT || 5000;
   setPath('./server.log');
 
-  app.get('/', (_: Request, res: Response) => res.status(200).send('hello young skywalker' + _.ip));
+  app.get('/', (_: Request, res: Response) => res.status(200).send('hello young skywalker'));
   app.use('/auth/v1', AuthRouter);
+  app.use('/sms/v1', SmsRouter);
   app.use('/api-docs', SwaggerUI.serve, SwaggerUI.setup(SwaggerJSON, {}));
 
   app.use(notFoundMiddlware);

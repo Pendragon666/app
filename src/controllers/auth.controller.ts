@@ -5,6 +5,7 @@ import User from '../models/User';
 import { UserI } from '../types/User';
 import { saltRounds } from '../constants';
 import { JWT } from '../middlewares/jwt';
+import MessageService from '../services/message.service';
 
 export const getUsers = async (_: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
@@ -17,25 +18,28 @@ export const getUsers = async (_: Request, res: Response, next: NextFunction): P
 
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
-    const { username, password, birthday, email, number } = req.body as UserI;
-    if (username && password && birthday && email && number) {
-      const hashedPassword = await hash(password, saltRounds);
-      const user = await User.create({
-        username,
-        password: hashedPassword,
-        birthday,
-        email,
-        number,
-      });
+    const { username, password, birthday, email, number, code, _id } = req.body as UserI;
+    if (username && password && birthday && email && number && code) {
+      if (MessageService.checkNumber(code, _id)) {
+        const hashedPassword = await hash(password, saltRounds);
+        const user = await User.create({
+          username,
+          password: hashedPassword,
+          birthday,
+          email,
+          number,
+        });
 
-      const authToken = JWT.createToken(user.toJSON());
+        const authToken = JWT.createToken(user.toJSON());
 
-      const refreshToken = JWT.createRefreshToken(user.toJSON());
-
-      return res.status(200).json({ success: true, authToken, refreshToken });
+        const refreshToken = JWT.createRefreshToken(user.toJSON());
+        return res.status(200).json({ success: true, authToken, refreshToken });
+      }
+      res.status(400);
+      return next({ message: 'badRequest' });
     }
     res.status(400);
-    return next({ message: 'Something went wrong' });
+    return next({ message: 'badRequest' });
   } catch (error) {
     logLater('createUser change');
     if (error.code === 11000) {

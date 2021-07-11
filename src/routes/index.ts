@@ -1,3 +1,4 @@
 import AuthRouter from './auth';
+import SmsRouter from './sms';
 
-export { AuthRouter };
+export { AuthRouter, SmsRouter };
