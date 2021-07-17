@@ -1,5 +1,15 @@
 version: '3'
 services:
+  nginx:
+    image: nginx:latest
+    restart: always
+    container_name: pendragon-nginx-development
+    entrypoint: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - '80:80'
+      - '443:443'
   pendragon-api-development:
     # network_mode: 'host'
     build:
@@ -24,7 +34,19 @@ services:
     restart: always
     ports:
       - '27017:27017'
+    container_name: pendragon-mongodb-development
     environment:
       MONGO_INITDB_DATABASE: pendragon
     volumes:
       - ./data:/data/db
+  pendragon-webapp-development:
+    build:
+      context: ./web/
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '3000:3000'
+    container_name: pendragon-webapp-development
+    stdin_open: true
+    volumes:
+      - ./web/:/usr/src/app/webapp
+      - ./web/node_modules:/usr/src/app/webapp/node_modules

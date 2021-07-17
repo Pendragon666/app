@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import fs from 'fs';
+import cookieParser from 'cookie-parser';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
 import { logError, logSuccess, setPath } from '@harukazeorg/logger';
@@ -17,6 +18,7 @@ config();
   const app = express();
 
   app.set('trust proxy', true);
+  app.use(cookieParser());
 
   if (process.env.NODE_ENV == 'production') {
     app.use(

@@ -33,6 +33,8 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
         const authToken = JWT.createToken(user.toJSON());
 
         const refreshToken = JWT.createRefreshToken(user.toJSON());
+        res.cookie('auth_token', authToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+        res.cookie('refresh_token', refreshToken, { maxAge: 9000000000, httpOnly: true, secure: false });
         return res.status(200).json({ success: true, authToken, refreshToken });
       }
       res.status(400);
@@ -62,7 +64,8 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
           const authToken = JWT.createToken(user.toJSON());
 
           const refreshToken = JWT.createRefreshToken(user.toJSON());
-
+          res.cookie('auth_token', authToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+          res.cookie('refresh_token', refreshToken, { maxAge: 9000000000, httpOnly: true, secure: false });
           return res.status(200).json({ success: true, authToken, refreshToken });
         }
         res.status(400);

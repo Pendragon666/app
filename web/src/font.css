@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "ProdushRegular";
+  src: url("./assets/fonts/ProdushRegular.eot");
+  src: url("./assets/fonts/ProdushRegular.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/fonts/ProdushRegular.svg#ProdushRegular") format("svg"),
+    url("./assets/fonts/ProdushRegular.ttf") format("truetype"),
+    url("./assets/fonts/ProdushRegular.woff") format("woff"),
+    url("./assets/fonts/ProdushRegular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
