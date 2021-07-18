@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { loginUser } from 'redux/actions/userActions';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { isEmail } from 'utils/validators';
 
 const styles = createStyles({
   main: {
@@ -52,22 +53,64 @@ const styles = createStyles({
   },
 });
 
+interface Fields {
+  error: boolean;
+  value: string;
+}
+
 const Login: React.FC = (props: any) => {
   const { classes } = props;
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<Fields>({
+    value: '',
+    error: false,
+  });
+  const [password, setPassword] = useState<Fields>({
+    value: '',
+    error: false,
+  });
   const history = useHistory();
 
   const dispatch = useDispatch();
   const LoginUser = (u: any, h: any) => dispatch(loginUser(u, h));
 
   const handleClick = () => {
-    const user = {
-      email,
-      password,
-    };
-    LoginUser(user, history);
+    if (email && password) {
+      const user = {
+        email: email.value,
+        password: password.value,
+      };
+      LoginUser(user, history);
+    }
+  };
+
+  const handleChange = (el: string, type: string) => {
+    if (type === 'email') {
+      const check = isEmail.test(el);
+      if (check) {
+        return setEmail({
+          value: el,
+          error: false,
+        });
+      }
+      return setEmail({
+        value: el,
+        error: true,
+      });
+    }
+
+    if (type === 'password') {
+      if (el.length) {
+        return setPassword({
+          value: el,
+          error: false,
+        });
+      }
+      return setPassword({
+        value: el,
+        error: true,
+      });
+    }
   };
 
   return (
@@ -77,9 +120,10 @@ const Login: React.FC = (props: any) => {
           className={classes.textField}
           placeholder="Email"
           type="email"
-          value={email}
+          value={email.value}
+          error={email.error}
           autoComplete="nope"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => handleChange(e.target.value, 'email')}
           inputProps={{
             autoComplete: 'new-email',
           }}
@@ -88,9 +132,10 @@ const Login: React.FC = (props: any) => {
           className={classes.textField}
           placeholder="Password"
           type="password"
-          value={password}
+          value={password.value}
+          error={password.error}
           autoComplete="nope"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleChange(e.target.value, 'password')}
           inputProps={{
             autoComplete: 'new-password',
           }}

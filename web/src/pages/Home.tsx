@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStyles, withStyles } from '@material-ui/core';
 import { Navbar } from 'components';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const styles = createStyles({
   main: {
@@ -15,6 +17,10 @@ const styles = createStyles({
 
 const Home: React.FC = (props: any) => {
   const { classes, history } = props;
+
+  useEffect(() => {
+    axios.get('/api/').then((res) => console.info(res));
+  }, []);
 
   return (
     <div className={classes.main}>

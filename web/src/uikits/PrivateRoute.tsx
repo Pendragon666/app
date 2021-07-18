@@ -1,15 +1,16 @@
-import { Route, Redirect } from "react-router-dom";
-import decode from "jwt-decode";
+import Cookie from 'js-cookie';
+import decode from 'jwt-decode';
+import { Route, Redirect } from 'react-router-dom';
 
 const checkAuth = () => {
-  const token = localStorage.getItem("token");
-  const refreshToken = localStorage.getItem("refreshToken");
-  if (!token || !refreshToken) {
+  const token = Cookie.get('P-Token');
+  if (!token) {
     return false;
   }
 
   try {
-    const { exp }: any = decode(refreshToken);
+    const { exp }: any = decode(token);
+    console.info(exp);
     if (exp < new Date().getTime() / 1000) {
       return false;
     }
@@ -21,14 +22,7 @@ const checkAuth = () => {
 };
 
 const PrivateRoute = ({ component: Component, ...rest }: any) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        checkAuth() ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
+  return <Route {...rest} render={(props) => (checkAuth() ? <Component {...props} /> : <Redirect to="/login" />)} />;
 };
 
 export default PrivateRoute;

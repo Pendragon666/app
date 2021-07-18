@@ -1,15 +1,15 @@
-import { Route, Redirect } from "react-router-dom";
-import decode from "jwt-decode";
+import Cookie from 'js-cookie';
+import decode from 'jwt-decode';
+import { Route, Redirect } from 'react-router-dom';
 
 const checkAuth = () => {
-  const token = localStorage.getItem("token");
-  const refreshToken = localStorage.getItem("refreshToken");
-  if (!token || !refreshToken) {
+  const token = Cookie.get('P-Token');
+  if (!token) {
     return false;
   }
 
   try {
-    const { exp }: any = decode(refreshToken);
+    const { exp }: any = decode(token);
     if (exp < new Date().getTime() / 1000) {
       return false;
     }
@@ -21,14 +21,7 @@ const checkAuth = () => {
 };
 
 const PublicRoute = ({ component: Component, ...rest }: any) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        !checkAuth() ? <Component {...props} /> : <Redirect to="/" />
-      }
-    />
-  );
+  return <Route {...rest} render={(props) => (!checkAuth() ? <Component {...props} /> : <Redirect to="/" />)} />;
 };
 
 export default PublicRoute;

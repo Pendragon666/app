@@ -1,20 +1,19 @@
-// import { Schema, model, Model } from 'mongoose';
-// import { UserI } from '../types/User';
+import { Schema, model, Model } from 'mongoose';
+import { ProfileI } from '../types/Profile';
 
-// const UserSchema = new Schema<UserI, Model<UserI>, UserI>(
-//   {
-//     username: { type: String, required: true },
-//     number: { type: String, required: true, unique: true },
-//     email: { type: String, required: true, unique: true },
-//     password: { type: String, required: true },
-//     verified: Boolean,
-//     birthday: Date,
-//   },
-//   {
-//     collection: 'users',
-//   },
-// );
+const ProfileSchema = new Schema<ProfileI, Model<ProfileI>, ProfileI>(
+  {
+    description: { type: String },
+    fullName: { type: String, required: true },
+    leagueName: { type: String },
+    profileImage: { type: String },
+    uid: { type: Schema.Types.ObjectId, ref: 'users' },
+  },
+  {
+    collection: 'profiles',
+  },
+);
 
-// const User = model('users', UserSchema);
+const Profile = model('profiles', ProfileSchema);
 
-// export default User;
+export default Profile;

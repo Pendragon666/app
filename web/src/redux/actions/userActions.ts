@@ -1,17 +1,13 @@
 import axios from 'axios';
+import Cookie from 'js-cookie';
 import { SET_MESSAGE } from 'redux/types/ui';
 import { SET_USER, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE } from '../types/user';
 
 export const loginUser = (userData: any, history: any) => (dispatch: any) => {
   axios
     .post('/api/auth/v1/login', userData)
-    .then((res) => {
-      const token = res.data.authToken;
-      const refreshToken = res.data.refreshToken;
-      localStorage.setItem('token', token); //setting token to local storage
-      localStorage.setItem('refreshToken', refreshToken);
-      axios.defaults.headers.common['P-Token'] = token; //setting authorize token to header in axios
-      axios.defaults.headers.common['P-Refresh-Token'] = refreshToken;
+    .then(() => {
+      axios.defaults.headers.common['P-Token'] = Cookie.get('P-Token'); //setting authorize token to header in axios
       dispatch({
         type: SET_MESSAGE,
         payload: {
@@ -37,13 +33,8 @@ export const loginUser = (userData: any, history: any) => (dispatch: any) => {
 export const createUser = (userData: any, history: any) => (dispatch: any) => {
   axios
     .post('/api/auth/v1/register', userData)
-    .then((res) => {
-      const token = res.data.authToken;
-      const refreshToken = res.data.refreshToken;
-      localStorage.setItem('token', token); //setting token to local storage
-      localStorage.setItem('refreshToken', refreshToken);
-      axios.defaults.headers.common['P-Token'] = token; //setting authorize token to header in axios
-      axios.defaults.headers.common['P-Refresh-Token'] = refreshToken;
+    .then(() => {
+      axios.defaults.headers.common['P-Token'] = Cookie.get('P-Token'); //setting authorize token to header in axios
       dispatch({
         type: SET_MESSAGE,
         payload: {
@@ -75,8 +66,7 @@ export const getUserData = (data: any) => (dispatch: any) => {
 };
 
 export const logoutUser = () => (dispatch: any) => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('refreshToken');
+  Cookie.remove('P-Token');
   delete axios.defaults.headers.common['P-Token'];
   delete axios.defaults.headers.common['P-Refresh-Token'];
   dispatch({

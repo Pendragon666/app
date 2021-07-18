@@ -30,10 +30,12 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
           number,
         });
 
-        const token = JWT.createRefreshToken(user.toJSON());
-        res.cookie('P-Token', token, { maxAge: 60 * 60 * 24 * 7 * 1000 });
+        const authToken = JWT.createToken(user.toJSON());
 
-        return res.status(200).json({ success: true, token });
+        const refreshToken = JWT.createRefreshToken(user.toJSON());
+        res.cookie('auth_token', authToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+        res.cookie('refresh_token', refreshToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+        return res.status(200).json({ success: true, authToken, refreshToken });
       }
       res.status(400);
       return next({ message: 'badRequest' });
@@ -59,9 +61,12 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         const access = await compare(password, user.password);
 
         if (access) {
-          const token = JWT.createRefreshToken(user.toJSON());
-          res.cookie('P-Token', token, { maxAge: 60 * 60 * 24 * 7 * 1000 });
-          return res.status(200).json({ success: true, token });
+          const authToken = JWT.createToken(user.toJSON());
+
+          const refreshToken = JWT.createRefreshToken(user.toJSON());
+          res.cookie('auth_token', authToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+          res.cookie('refresh_token', refreshToken, { maxAge: 9000000000, httpOnly: true, secure: false });
+          return res.status(200).json({ success: true, authToken, refreshToken });
         }
         res.status(400);
         return next({ message: 'badLogin' });
