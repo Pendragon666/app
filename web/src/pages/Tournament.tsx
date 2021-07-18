@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, withStyles } from '@material-ui/core';
-import { Navbar, ProfileLayout } from 'components';
+import { Navbar } from 'components';
 
 const styles = createStyles({
   main: {
@@ -13,15 +13,15 @@ const styles = createStyles({
   },
 });
 
-const Profile: React.FC = (props: any) => {
+const Tournament: React.FC = (props: any) => {
   const { classes, history } = props;
 
   return (
     <div className={classes.main}>
       <Navbar history={history} />
-      <ProfileLayout />
+      <h1>Tournament</h1>
     </div>
   );
 };
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(Tournament);

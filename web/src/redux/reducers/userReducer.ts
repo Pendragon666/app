@@ -1,20 +1,23 @@
-import {
-  SET_USER,
-  SET_AUTHENTICATED,
-  SET_UNAUTHENTICATED,
-  LOADING_USER,
-} from "../types/user";
+import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE } from '../types/user';
 
 interface InitialState {
   authenticated: boolean;
   credentials: any;
   loading: boolean;
+  code: {
+    limited: boolean;
+    lastCode: string;
+  };
 }
 
 export const initialState: InitialState = {
   authenticated: false,
   credentials: {},
   loading: false,
+  code: {
+    limited: false,
+    lastCode: '',
+  },
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -37,6 +40,11 @@ export default function (state = initialState, action: any) {
       return {
         ...state,
         loading: true,
+      };
+    case SET_CODE:
+      return {
+        ...state,
+        ...action.payload,
       };
     default:
       return state;

@@ -1,4 +1,9 @@
-import LoginPage from "./Login";
-import ProfilePage from "./Profile";
+// Public Routes
+import LoginPage from './Login';
+import RegisterPage from './Register';
 
-export { LoginPage, ProfilePage };
+// Private Routes
+import ProfilePage from './Profile';
+import TournamentPage from './Tournament';
+
+export { LoginPage, ProfilePage, TournamentPage, RegisterPage };

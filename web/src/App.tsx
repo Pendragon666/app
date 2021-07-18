@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Routes
-import { LoginPage, ProfilePage } from './pages/index';
+import { LoginPage, ProfilePage, RegisterPage, TournamentPage } from './pages/index';
 import { PublicRoute, PrivateRoute } from 'utils';
 
 const App: React.FC = () => {
@@ -18,9 +18,11 @@ const App: React.FC = () => {
             <Switch>
               {/* Public Routes */}
               <PublicRoute path="/login" component={LoginPage} exact />
+              <PublicRoute path="/register" component={RegisterPage} exact />
 
               {/* Private Routes */}
               <PrivateRoute path="/" component={ProfilePage} exact />
+              <PrivateRoute path="/tournaments" component={TournamentPage} exact />
 
               <Route path="/" render={() => <div>NOT FOUND</div>} />
             </Switch>
