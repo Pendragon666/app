@@ -2,11 +2,11 @@ import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { Button, createStyles, TextField, withStyles } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { loginUser, requestNumber } from 'redux/actions/userActions';
+import { createUser, requestNumber } from 'redux/actions/userActions';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { isEmail, isNum } from 'utils/validators';
 
 const styles = createStyles({
   main: {
@@ -71,49 +71,234 @@ const styles = createStyles({
 });
 
 const Register: React.FC = (props: any) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { classes } = props;
 
   const [value, setValue] = useState({
-    id: '',
-    email: '',
-    password: '',
+    id: {
+      value: '',
+      error: false,
+    },
+    email: {
+      value: '',
+      error: false,
+    },
+    password: {
+      value: '',
+      error: false,
+    },
     birthday: new Date() || null,
-    number: '',
-    code: '',
-    confirmPassword: '',
+    number: {
+      value: '',
+      error: false,
+    },
+    code: {
+      value: '',
+      error: false,
+    },
+    confirmPassword: {
+      value: '',
+      error: false,
+    },
+    username: {
+      value: '',
+      error: false,
+    },
   });
 
   const [sent, setSent] = useState(false);
   const [step, setStep] = useState(0);
   const history = useHistory();
 
+  const SMS = useSelector((state: any) => state.user.code);
+
   const dispatch = useDispatch();
-  const LoginUser = (u: any, h: any) => dispatch(loginUser(u, h));
   const RequestCode = (phoneNumber: string) => dispatch(requestNumber(phoneNumber));
+  const CreateUser = (data: any, history: any) => dispatch(createUser(data, history));
 
-  const handleClick = () => {
-    enqueueSnackbar('Application limited to beta users!', {
-      variant: 'info',
-    });
+  const handleChange = (el: string, change: string) => {
+    if (change === 'id') {
+      const check = isNum.test(el);
+      if (el.length === 11 && check) {
+        return setValue({
+          ...value,
+          id: {
+            ...value.id,
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        id: {
+          value: el,
+          error: true,
+        },
+      });
+    }
 
-    const user = {
-      email: value.email,
-      password: value.password,
-    };
-    LoginUser(user, history);
+    if (change === 'email') {
+      const check = isEmail.test(el);
+      if (check) {
+        return setValue({
+          ...value,
+          email: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        email: {
+          value: el,
+          error: true,
+        },
+      });
+    }
+
+    if (change === 'password') {
+      if (el.length >= 6) {
+        return setValue({
+          ...value,
+          password: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        password: {
+          value: el,
+          error: true,
+        },
+      });
+    }
+
+    if (change === 'confirmPassword') {
+      if (el === value.password.value) {
+        return setValue({
+          ...value,
+          confirmPassword: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        confirmPassword: {
+          value: el,
+          error: true,
+        },
+      });
+    }
+
+    if (change === 'number') {
+      const check = isNum.test(el);
+      if (el.length === 9 && check && el[0] === '5') {
+        return setValue({
+          ...value,
+          number: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        number: {
+          value: el,
+          error: true,
+        },
+      });
+    }
+
+    if (change === 'code') {
+      const check = isNum.test(el);
+      if (el.length === 5 && check) {
+        return setValue({
+          ...value,
+          code: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        code: {
+          value: el,
+          error: true,
+        },
+      });
+    }
+
+    if (change === 'username') {
+      if (el.length) {
+        return setValue({
+          ...value,
+          username: {
+            value: el,
+            error: false,
+          },
+        });
+      }
+      return setValue({
+        ...value,
+        username: {
+          value: el,
+          error: true,
+        },
+      });
+    }
   };
 
   const getCode = () => {
-    if (value.number[0] === '5' && value.number.length === 9) {
-      RequestCode(value.number);
+    if (value.number.value[0] === '5' && value.number.value.length === 9) {
+      RequestCode(value.number.value);
       setSent(true);
     }
   };
 
   const handlePageChange = (page: number) => {
-    if (page === 1 && value.id && value.email && value.password && value.confirmPassword) {
+    const checkErrors = !value.id.error && !value.confirmPassword.error && !value.email.error && !value.password.error;
+    const checkValues = value.id.value && value.confirmPassword.value && value.email.value && value.password.value;
+    if (page === 1 && checkErrors && checkValues) {
       setStep(page);
+    }
+  };
+
+  const handleRegister = () => {
+    const checkErrors =
+      !value.id.error &&
+      !value.confirmPassword.error &&
+      !value.email.error &&
+      !value.password.error &&
+      !value.number.error &&
+      !value.code.error;
+    const checkValues =
+      value.id.value &&
+      value.confirmPassword.value &&
+      value.email.value &&
+      value.password.value &&
+      value.number.value &&
+      value.code.value;
+
+    if (checkErrors && checkValues) {
+      CreateUser(
+        {
+          username: value.username.value,
+          password: value.password.value,
+          birthday: value.birthday,
+          email: value.email.value,
+          number: value.number.value,
+          code: value.code.value,
+          _id: SMS.lastCode,
+        },
+        history,
+      );
     }
   };
 
@@ -127,14 +312,10 @@ const Register: React.FC = (props: any) => {
                 className={classes.textField}
                 placeholder="ID Number"
                 type="text"
-                value={value.id}
+                value={value.id.value}
                 autoComplete="nope"
-                onChange={(e) =>
-                  setValue({
-                    ...value,
-                    id: e.target.value,
-                  })
-                }
+                error={value.id.error}
+                onChange={(e) => handleChange(e.target.value, 'id')}
                 inputProps={{
                   autoComplete: 'new-password',
                 }}
@@ -143,14 +324,10 @@ const Register: React.FC = (props: any) => {
                 className={classes.textField}
                 placeholder="Email"
                 type="email"
-                value={value.email}
+                error={value.email.error}
+                value={value.email.value}
                 autoComplete="nope"
-                onChange={(e) =>
-                  setValue({
-                    ...value,
-                    email: e.target.value,
-                  })
-                }
+                onChange={(e) => handleChange(e.target.value, 'email')}
                 inputProps={{
                   autoComplete: 'new-email',
                 }}
@@ -159,14 +336,10 @@ const Register: React.FC = (props: any) => {
                 className={classes.textField}
                 placeholder="Password"
                 type="password"
-                value={value.password}
+                value={value.password.value}
                 autoComplete="nope"
-                onChange={(e) =>
-                  setValue({
-                    ...value,
-                    password: e.target.value,
-                  })
-                }
+                error={value.password.error}
+                onChange={(e) => handleChange(e.target.value, 'password')}
                 inputProps={{
                   autoComplete: 'new-password',
                 }}
@@ -175,14 +348,10 @@ const Register: React.FC = (props: any) => {
                 className={classes.textField}
                 placeholder="Confirm Password"
                 type="password"
-                value={value.confirmPassword}
+                value={value.confirmPassword.value}
+                error={value.confirmPassword.error}
                 autoComplete="nope"
-                onChange={(e) =>
-                  setValue({
-                    ...value,
-                    confirmPassword: e.target.value,
-                  })
-                }
+                onChange={(e) => handleChange(e.target.value, 'confirmPassword')}
                 inputProps={{
                   autoComplete: 'new-password',
                 }}
@@ -200,7 +369,6 @@ const Register: React.FC = (props: any) => {
                 value={value.birthday}
                 className={classes.datePicker}
                 onChange={(birthday) => {
-                  console.info(birthday);
                   setValue({
                     ...value,
                     birthday: new Date(birthday || ''),
@@ -212,16 +380,23 @@ const Register: React.FC = (props: any) => {
               />
               <TextField
                 className={classes.textField}
+                placeholder="Username"
+                type="text"
+                value={value.username.value}
+                error={value.username.error}
+                onChange={(e) => handleChange(e.target.value, 'username')}
+                inputProps={{
+                  autoComplete: 'new-password',
+                }}
+              />
+              <TextField
+                className={classes.textField}
                 placeholder="Number"
                 type="text"
-                value={value.number}
+                value={value.number.value}
+                error={value.number.error}
                 autoComplete="nope"
-                onChange={(e) =>
-                  setValue({
-                    ...value,
-                    number: e.target.value,
-                  })
-                }
+                onChange={(e) => handleChange(e.target.value, 'number')}
                 inputProps={{
                   autoComplete: 'new-password',
                 }}
@@ -233,19 +408,16 @@ const Register: React.FC = (props: any) => {
                     className={classes.textField}
                     placeholder="Enter Code"
                     type="text"
-                    value={value.code}
+                    value={value.code.value}
+                    error={value.code.error}
                     autoComplete="nope"
-                    onChange={(e) =>
-                      setValue({
-                        ...value,
-                        code: e.target.value,
-                      })
-                    }
+                    onChange={(e) => handleChange(e.target.value, 'code')}
                     inputProps={{
                       autoComplete: 'new-code',
+                      maxLength: 5,
                     }}
                   />
-                  <Button className={classes.btn} variant="contained" color="primary" onClick={handleClick}>
+                  <Button className={classes.btn} variant="contained" color="primary" onClick={handleRegister}>
                     Register
                   </Button>
                 </>

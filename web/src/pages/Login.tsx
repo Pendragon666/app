@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, createStyles, TextField, withStyles } from '@material-ui/core';
-import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { loginUser } from 'redux/actions/userActions';
 import { useHistory } from 'react-router-dom';
@@ -54,7 +53,6 @@ const styles = createStyles({
 });
 
 const Login: React.FC = (props: any) => {
-  const { enqueueSnackbar } = useSnackbar();
   const { classes } = props;
 
   const [email, setEmail] = useState<string>('');
@@ -65,10 +63,6 @@ const Login: React.FC = (props: any) => {
   const LoginUser = (u: any, h: any) => dispatch(loginUser(u, h));
 
   const handleClick = () => {
-    enqueueSnackbar('Application limited to beta users!', {
-      variant: 'info',
-    });
-
     const user = {
       email,
       password,
