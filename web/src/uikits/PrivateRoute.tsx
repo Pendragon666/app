@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Cookie from 'js-cookie';
 import decode from 'jwt-decode';
 import { Route, Redirect } from 'react-router-dom';
@@ -9,11 +10,13 @@ const checkAuth = () => {
   }
 
   try {
-    const { exp }: any = decode(token);
-    console.info(exp);
-    if (exp < new Date().getTime() / 1000) {
+    const user: any = decode(token);
+    console.info(user);
+    if (user.exp < new Date().getTime() / 1000) {
+      Cookie.remove('P-Token');
       return false;
     }
+    axios.defaults.headers.common['P-Token'] = token; //setting authorize token to header in axios
   } catch (e) {
     return false;
   }

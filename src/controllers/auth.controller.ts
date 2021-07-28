@@ -1,4 +1,3 @@
-import { logLater } from '@harukazeorg/logger';
 import { NextFunction, Request, Response } from 'express';
 import { hash, compare } from 'bcryptjs';
 import User from '../models/User';
@@ -6,6 +5,7 @@ import { UserI } from '../types/User';
 import { saltRounds } from '../constants';
 import { JWT } from '../middlewares/jwt';
 import MessageService from '../services/message.service';
+import EmailService from '../services/email.service';
 
 export const getUsers = async (_: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
@@ -30,6 +30,8 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
           number,
         });
 
+        await EmailService.registerMail(email, username);
+
         const token = JWT.createRefreshToken(user.toJSON());
         res.cookie('P-Token', token, { maxAge: 60 * 60 * 24 * 7 * 1000 });
 
@@ -41,7 +43,6 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     res.status(400);
     return next({ message: 'badRequest' });
   } catch (error) {
-    logLater('createUser change');
     if (error.code === 11000) {
       res.status(400);
       return next({ ...error, message: 'alreadyExists' });

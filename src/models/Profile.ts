@@ -7,7 +7,7 @@ const ProfileSchema = new Schema<ProfileI, Model<ProfileI>, ProfileI>(
     fullName: { type: String, required: true },
     leagueName: { type: String },
     profileImage: { type: String },
-    uid: { type: Schema.Types.ObjectId, ref: 'users' },
+    uid: { type: Schema.Types.ObjectId, ref: 'users', required: true, unique: true },
   },
   {
     collection: 'profiles',

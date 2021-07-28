@@ -19,7 +19,7 @@ const Home: React.FC = (props: any) => {
   const { classes, history } = props;
 
   useEffect(() => {
-    axios.get('/api/').then((res) => console.info(res));
+    axios.get('/api/profile/v1').then((res) => console.info(res));
   }, []);
 
   return (

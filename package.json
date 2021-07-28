@@ -23,12 +23,12 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.0",
+    "nodemailer": "^6.6.3",
     "swagger-ui-express": "^4.1.6",
     "twilio": "^3.65.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@harukazeorg/logger": "^0.0.5",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",
@@ -37,6 +37,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.12.5",
+    "@types/nodemailer": "^6.4.4",
     "@types/swagger-ui-express": "^4.1.3",
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^4.28.1",

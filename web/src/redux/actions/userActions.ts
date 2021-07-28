@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
 import { SET_MESSAGE } from 'redux/types/ui';
-import { SET_USER, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE } from '../types/user';
+import { SET_PROFILE, SET_UNAUTHENTICATED, SET_CODE } from '../types/user';
 
 export const loginUser = (userData: any, history: any) => (dispatch: any) => {
   axios
@@ -57,18 +57,9 @@ export const createUser = (userData: any, history: any) => (dispatch: any) => {
     });
 };
 
-export const getUserData = (data: any) => (dispatch: any) => {
-  dispatch({ type: LOADING_USER });
-  dispatch({
-    type: SET_USER,
-    payload: data,
-  });
-};
-
 export const logoutUser = () => (dispatch: any) => {
   Cookie.remove('P-Token');
   delete axios.defaults.headers.common['P-Token'];
-  delete axios.defaults.headers.common['P-Refresh-Token'];
   dispatch({
     type: SET_UNAUTHENTICATED,
   });
@@ -116,6 +107,41 @@ export const requestNumber = (phoneNumber: string) => (dispatch: any) => {
           },
         });
       }
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          message: err.response.data.message,
+          show: true,
+          type: 'error',
+        },
+      });
+    });
+};
+
+export const getProfile = () => (dispatch: any) => {
+  axios
+    .get('/api/profile/v1')
+    .then((res) => {
+      dispatch({
+        type: SET_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      // if (err.response.status === 400) {
+      //   dispatch({
+      //     type: SET_CODE,
+      //     payload:
+      //   });
+      //   return dispatch({
+      //     type: SET_MESSAGE,
+      //     payload: {
+      //       message: err.response.data.message,
+      //       show: true,
+      //       type: 'warning',
+      //     },
+      //   });
+      // }
       dispatch({
         type: SET_MESSAGE,
         payload: {

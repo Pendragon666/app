@@ -29,6 +29,8 @@ services:
       REFRESH_TOKEN_SECRET: '${REFRESH_TOKEN_SECRET}'
       SMS_SID: '${SMS_SID}'
       SMS_AUTH_TOKEN: '${SMS_AUTH_TOKEN}'
+      EMAIL_ID: '${EMAIL_ID}'
+      EMAIL_PASSWORD: '${EMAIL_PASSWORD}'
   mongo:
     image: mongo
     restart: always

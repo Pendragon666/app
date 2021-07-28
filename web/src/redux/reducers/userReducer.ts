@@ -1,8 +1,20 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE } from '../types/user';
+import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE, SET_PROFILE } from '../types/user';
 
 interface InitialState {
   authenticated: boolean;
-  credentials: any;
+  user: {
+    id?: string;
+    email?: string;
+    username?: string;
+    birthday?: string;
+  };
+  profile: {
+    description?: string;
+    fullName?: string;
+    leagueName?: string;
+    profileImage?: string;
+    uid?: string;
+  };
   loading: boolean;
   code: {
     limited: boolean;
@@ -12,7 +24,8 @@ interface InitialState {
 
 export const initialState: InitialState = {
   authenticated: false,
-  credentials: {},
+  user: {},
+  profile: {},
   loading: false,
   code: {
     limited: false,
@@ -42,6 +55,11 @@ export default function (state = initialState, action: any) {
         loading: true,
       };
     case SET_CODE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case SET_PROFILE:
       return {
         ...state,
         ...action.payload,
