@@ -5,7 +5,7 @@ const ProfileSchema = new Schema<ProfileI, Model<ProfileI>, ProfileI>(
   {
     description: { type: String },
     fullName: { type: String, required: true },
-    leagueName: { type: String },
+    leagueName: { type: String, required: true, unique: true },
     profileImage: { type: String },
     uid: { type: Schema.Types.ObjectId, ref: 'users', required: true, unique: true },
   },

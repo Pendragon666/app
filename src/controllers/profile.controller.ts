@@ -3,7 +3,7 @@ import Profile from '../models/Profile';
 
 export const getProfile = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
-    const profile = await Profile.findOne({ uid: req.user });
+    const profile = await Profile.findOne({ uid: req.params.uid });
     if (profile) {
       return res.status(200).json(profile);
     }

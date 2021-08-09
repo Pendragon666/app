@@ -3,6 +3,6 @@ import { getProfile } from '../controllers/profile.controller';
 
 const router = Router();
 
-router.use('/', getProfile);
+router.use('/:uid', getProfile);
 
 export default router;

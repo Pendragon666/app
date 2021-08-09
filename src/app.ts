@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import fs from 'fs';
 import cookieParser from 'cookie-parser';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
@@ -28,11 +27,7 @@ declare namespace Express {
   app.use(cookieParser());
 
   if (process.env.NODE_ENV == 'production') {
-    app.use(
-      morgan('combined', {
-        stream: fs.createWriteStream('/var/log/pendragon/access.log', { flags: 'a' }),
-      }),
-    );
+    app.use(morgan('combined', {}));
   } else {
     app.use(morgan('dev'));
   }

@@ -1,17 +1,33 @@
 import React from 'react';
-import { createStyles, withStyles } from '@material-ui/core';
-import { Navbar, ProfileLayout } from 'components';
+import { createStyles, Theme, withStyles } from '@material-ui/core';
+import { Navbar } from 'components';
+import { ProfileLayout } from 'layouts';
 
-const styles = createStyles({
+const styles = createStyles((theme: Theme) => ({
   main: {
     width: '100vw',
     height: '100vh',
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#537895',
-    backgroundImage: 'linear-gradient(315deg, #7f53ac 0%, #647dee 74%)',
+    backgroundColor: 'white',
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      justifyContent: 'space-between',
+    },
   },
-});
+  wrapper: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+    },
+  },
+}));
 
 const Profile: React.FC = (props: any) => {
   const { classes, history } = props;
@@ -19,7 +35,9 @@ const Profile: React.FC = (props: any) => {
   return (
     <div className={classes.main}>
       <Navbar history={history} />
-      <ProfileLayout />
+      <div className={classes.wrapper}>
+        <ProfileLayout />
+      </div>
     </div>
   );
 };

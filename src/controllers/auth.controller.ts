@@ -18,8 +18,8 @@ export const getUsers = async (_: Request, res: Response, next: NextFunction): P
 
 export const createUser = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
-    const { username, password, birthday, email, number, code, _id } = req.body as UserI;
-    if (username && password && birthday && email && number && code) {
+    const { username, password, birthday, email, number, code, _id, national_id } = req.body as UserI;
+    if (username && password && birthday && email && number && code && national_id) {
       if (MessageService.checkNumber(code, _id)) {
         const hashedPassword = await hash(password, saltRounds);
         const user = await User.create({
@@ -28,6 +28,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
           birthday,
           email,
           number,
+          national_id,
         });
 
         await EmailService.registerMail(email, username);

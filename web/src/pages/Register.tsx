@@ -295,6 +295,7 @@ const Register: React.FC = (props: any) => {
           email: value.email.value,
           number: value.number.value,
           code: value.code.value,
+          national_id: value.id.value,
           _id: SMS.lastCode,
         },
         history,

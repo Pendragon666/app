@@ -1,91 +1,129 @@
-import { Button, createStyles, Hidden, withStyles } from '@material-ui/core';
-import { logoutUser } from 'redux/actions/userActions';
-import { useDispatch } from 'react-redux';
+import { createStyles, Theme, withStyles } from '@material-ui/core';
+// import { logoutUser } from 'redux/actions/userActions';
+// import { useDispatch } from 'react-redux';
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 interface Props {
   classes: any;
   history: RouteComponentProps['history'];
 }
 
-const styles = createStyles({
-  sidebar: {
-    backgroundColor: 'white',
-    height: '100vh',
-    width: '10vh',
-  },
-  navbar: {
-    height: '100vh',
-    width: '15vw',
-  },
-  rightNavbar: {
-    width: '15vw',
-    height: '95vh',
-    backgroundColor: '#ffffff',
-    backgroundImage: 'linear-gradient(315deg, #485461 0%, #28313b 74%)',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  topNavbar: {
-    width: '100vw',
-    height: '5vh',
-    backgroundColor: '#ffffff',
-    backgroundImage: 'linear-gradient(315deg, #485461 0%, #28313b 74%)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  topNavbarWrapper: {
-    width: '93%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  rightButtons: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '3vh',
-    '& button': {
-      color: 'white',
+const styles = createStyles((theme: Theme) => ({
+  container: {
+    [theme.breakpoints.down('sm')]: {
+      backgroundImage: 'linear-gradient(315deg, #485461 0%, #28313b 74%)',
+      width: '100vw',
+      height: 'auto',
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      justifyContent: 'space-between',
     },
   },
-});
+  layout: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      listStyle: 'none',
+      '& li': {
+        padding: '4.5px 0',
+        fontSize: 13,
+        color: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        '&:hover': {
+          backgroundColor: 'rgb(7, 177, 77, 0.42)',
+        },
+      },
+    },
+  },
+  layoutButtons: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 18,
+    },
+  },
+}));
 
 const Navbar: React.FC<Props> = (props) => {
   const { classes, history } = props;
 
-  const dispatch = useDispatch();
-  const LogoutUser = () => dispatch(logoutUser());
+  const id = useSelector((state: any) => state.user.user.id);
+
+  const [routes, setRoutes] = useState([
+    { name: 'Home', path: '/', icon: <HomeIcon />, isSelected: false, clickable: true },
+    { name: 'Tournament', path: '/tournaments', icon: <SportsEsportsIcon />, isSelected: false, clickable: true },
+    { name: 'Statistics', path: '/stats', icon: <EqualizerIcon />, isSelected: false, clickable: true },
+    { name: 'Profile', path: `/profile/${id}`, icon: <PersonIcon />, isSelected: false, clickable: true },
+  ]);
+
+  useEffect(() => {
+    setRoutes(
+      routes.map((route) => {
+        if (route.path === history.location.pathname) {
+          return {
+            ...route,
+            isSelected: true,
+            clickable: false,
+          };
+        }
+        return route;
+      }),
+    );
+
+    if (id) {
+      if (history.location.pathname.split('/')[2] === id) {
+        setRoutes(
+          routes.map((route) => {
+            if (route.name === 'Profile') {
+              return {
+                ...route,
+                isSelected: true,
+                clickable: false,
+              };
+            }
+            return route;
+          }),
+        );
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history.location.pathname, id]);
+
+  const handleRouteChange = (location: string, clickable: boolean) => {
+    if (clickable) {
+      return history.push(location);
+    }
+  };
 
   return (
-    <Hidden smDown>
-      <div className={classes.navbar}>
-        <div className={classes.topNavbar}>
-          <div className={classes.topNavbarWrapper}>
-            <h1
-              style={{
-                fontFamily: 'ProdushRegular',
-                color: 'white',
-              }}
+    <>
+      <div className={classes.container}>
+        <ul className={classes.layout}>
+          {routes.map((route) => (
+            <li
+              key={route.name}
+              style={route.isSelected ? { backgroundColor: 'green' } : {}}
+              onClick={() => handleRouteChange(route.path, route.clickable)}
             >
-              Pendragon
-            </h1>
-            <Button onClick={LogoutUser} style={{ color: 'white' }}>
-              Logout
-            </Button>
-          </div>
-        </div>
-        <div className={classes.rightNavbar}>
-          <div className={classes.rightButtons}>
-            <Button onClick={() => history.push('/')}>Home</Button>
-            <Button onClick={() => history.push('/profile')}>Profile</Button>
-            <Button onClick={() => history.push('/tournaments')}>Tournaments</Button>
-            <Button onClick={() => history.push('/stats')}>Stats</Button>
-          </div>
-        </div>
+              {route.icon}
+              <p>{route.name}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-    </Hidden>
+    </>
   );
 };
 

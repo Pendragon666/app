@@ -9,6 +9,7 @@ const UserSchema = new Schema<UserI, Model<UserI>, UserI>(
     password: { type: String, required: true },
     verified: Boolean,
     birthday: Date,
+    national_id: { type: String, required: true, unique: true },
   },
   {
     collection: 'users',

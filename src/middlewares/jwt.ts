@@ -1,16 +1,16 @@
 import jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
-import { UserI } from '../types/User';
+import { UserToken } from '../types/User';
 
 export class JWT {
-  public static createToken(user: UserI) {
+  public static createToken(user: UserToken) {
     const token = jwt.sign(user, process.env.TOKEN_SECRET!, {
       expiresIn: '1m',
     });
     return token;
   }
 
-  public static createRefreshToken(user: UserI) {
+  public static createRefreshToken(user: UserToken) {
     const refreshToken = jwt.sign(
       { id: user._id, email: user.email, username: user.username, birthday: user.birthday },
       process.env.REFRESH_TOKEN_SECRET!,

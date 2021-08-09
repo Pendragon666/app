@@ -1,27 +1,43 @@
 import React from 'react';
-import { createStyles, withStyles } from '@material-ui/core';
+import { createStyles, Theme, withStyles } from '@material-ui/core';
 import { Navbar } from 'components';
 
-const styles = createStyles({
+const styles = createStyles((theme: Theme) => ({
   main: {
     width: '100vw',
     height: '100vh',
     display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#537895',
-    backgroundImage: 'linear-gradient(315deg, #7f53ac 0%, #647dee 74%)',
-  },
-});
+    backgroundColor: 'white',
 
-const Tournament: React.FC = (props: any) => {
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      justifyContent: 'space-between',
+    },
+  },
+}));
+
+const Tournaments: React.FC = (props: any) => {
   const { classes, history } = props;
 
   return (
     <div className={classes.main}>
       <Navbar history={history} />
-      <h1>Tournament</h1>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <h1>Tournaments Page</h1>
+      </div>
     </div>
   );
 };
 
-export default withStyles(styles)(Tournament);
+export default withStyles(styles)(Tournaments);

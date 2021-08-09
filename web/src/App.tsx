@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Routes
-import { HomePage, LoginPage, ProfilePage, RegisterPage, StatsPage, TournamentPage } from 'pages';
+import { HomePage, LoginPage, ProfilePage, RegisterPage, StatsPage, TournamentPage, SingleTournamentPage } from 'pages';
 import { PublicRoute, PrivateRoute } from 'uikits';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -28,8 +28,13 @@ const App: React.FC = () => {
             {/* Private Routes */}
             <PrivateRoute path="/" component={HomePage} exact />
             <PrivateRoute path="/stats" component={StatsPage} exact />
-            <PrivateRoute path="/profile" component={ProfilePage} exact />
+            <PrivateRoute path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
             <PrivateRoute path="/tournaments" component={TournamentPage} exact />
+            <PrivateRoute
+              path="/tournaments/:id"
+              component={(props: any) => <SingleTournamentPage {...props} />}
+              exact
+            />
 
             <Route path="/" render={() => <div>NOT FOUND</div>} />
           </Switch>
