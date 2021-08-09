@@ -324,13 +324,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@harukazeorg/logger@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@harukazeorg/logger/-/logger-0.0.5.tgz#c5242ca8776866bf4329fae632e0d626c8c45fd4"
-  integrity sha512-eTp2Y9r7J3Ps1qnfUZQIgjx3tEIZyUKtIwCC1oimf7HE8Jzm27hs3mls9MmZini5QvYqe0eq+T6XTeTA35l1Wg==
-  dependencies:
-    chalk "^4.1.1"
-
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -1283,7 +1276,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0, chalk@^4.1.1:
+chalk@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
   integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
