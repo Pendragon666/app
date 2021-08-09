@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,8 +10,32 @@ import { PublicRoute, PrivateRoute } from 'uikits';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { clearMessage } from 'redux/actions/uiActions';
+import { Workbox } from 'workbox-window';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      const wb = new Workbox('/sw.js');
+
+      wb.addEventListener('installed', (event) => {
+        event.sw?.addEventListener('statechange', () => {
+          console.info('update avaliable');
+        });
+      });
+
+      wb.register()
+        .then((registration) => {
+          console.info('Service worker successfully installed');
+          if (registration?.waiting) {
+            console.info('update found');
+            window.location.reload();
+            wb.messageSkipWaiting();
+          }
+        })
+        .catch(console.error);
+    }
+  }, []);
+
   const UI = useSelector((state: any) => state.UI);
   const dispatch = useDispatch();
   const ClearMessage = () => dispatch(clearMessage());
