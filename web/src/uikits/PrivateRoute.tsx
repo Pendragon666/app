@@ -35,7 +35,6 @@ const CheckAuth = () => {
   } catch (e) {
     return { authenticated: false, user };
   }
-
   return { authenticated: true, user };
 };
 

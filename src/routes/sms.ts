@@ -3,6 +3,6 @@ import { requestSms } from '../controllers/sms.controller';
 
 const router = Router();
 
-router.use('/', requestSms);
+router.post('/', requestSms);
 
 export default router;

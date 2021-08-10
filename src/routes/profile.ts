@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { getProfile } from '../controllers/profile.controller';
+import { createProfile, getProfile } from '../controllers/profile.controller';
 
 const router = Router();
 
-router.use('/:uid', getProfile);
+router.get('/:uid', getProfile);
+router.post('/', createProfile);
 
 export default router;

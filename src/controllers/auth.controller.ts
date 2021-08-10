@@ -5,7 +5,7 @@ import { UserI } from '../types/User';
 import { saltRounds } from '../constants';
 import { JWT } from '../middlewares/jwt';
 import MessageService from '../services/message.service';
-import EmailService from '../services/email.service';
+// import EmailService from '../services/email.service';
 
 export const getUsers = async (_: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
@@ -31,7 +31,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
           national_id,
         });
 
-        await EmailService.registerMail(email, username);
+        // await EmailService.registerMail(email, username);
 
         const token = JWT.createRefreshToken(user.toJSON());
         res.cookie('P-Token', token, { maxAge: 60 * 60 * 24 * 7 * 1000 });

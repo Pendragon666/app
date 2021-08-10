@@ -12,7 +12,7 @@ export class JWT {
 
   public static createRefreshToken(user: UserToken) {
     const refreshToken = jwt.sign(
-      { id: user._id, email: user.email, username: user.username, birthday: user.birthday },
+      { _id: user._id, email: user.email, username: user.username, birthday: user.birthday },
       process.env.REFRESH_TOKEN_SECRET!,
       {
         expiresIn: '365d',
@@ -22,12 +22,12 @@ export class JWT {
   }
 
   public static verifyToken(req: Request, _: Response, next: NextFunction) {
-    const token = req.get('P-Token');
+    const token = req.cookies['P-Token'];
     if (token) {
-      jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!, (_, user) => {
+      jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!, (_: any, user: any) => {
         if (user) {
           //@ts-ignore
-          req.user = user.id;
+          req.user = user;
         }
       });
       return next();

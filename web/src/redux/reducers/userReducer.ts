@@ -3,7 +3,7 @@ import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_COD
 interface InitialState {
   authenticated: boolean;
   user: {
-    id?: string;
+    _id?: string;
     email?: string;
     username?: string;
     birthday?: string;
@@ -14,6 +14,7 @@ interface InitialState {
     leagueName?: string;
     profileImage?: string;
     uid?: string;
+    inTeam?: boolean;
   };
   loading: boolean;
   code: {

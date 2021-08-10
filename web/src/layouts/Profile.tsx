@@ -404,7 +404,7 @@ const ProfileLayout: React.FC<Props> = (props) => {
         <Button
           style={{ width: '90%', marginTop: 'auto', marginBottom: 20 }}
           color="secondary"
-          //   disabled
+          disabled
           variant="contained"
         >
           Delete Account

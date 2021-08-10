@@ -5,6 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import GroupIcon from '@material-ui/icons/Group';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -58,12 +59,13 @@ const styles = createStyles((theme: Theme) => ({
 const Navbar: React.FC<Props> = (props) => {
   const { classes, history } = props;
 
-  const id = useSelector((state: any) => state.user.user.id);
+  const id = useSelector((state: any) => state.user.user._id);
 
   const [routes, setRoutes] = useState([
     { name: 'Home', path: '/', icon: <HomeIcon />, isSelected: false, clickable: true },
-    { name: 'Tournament', path: '/tournaments', icon: <SportsEsportsIcon />, isSelected: false, clickable: true },
+    { name: 'Tournaments', path: '/tournaments', icon: <SportsEsportsIcon />, isSelected: false, clickable: true },
     { name: 'Statistics', path: '/stats', icon: <EqualizerIcon />, isSelected: false, clickable: true },
+    { name: 'Teams', path: '/teams', icon: <GroupIcon />, isSelected: false, clickable: true },
     { name: 'Profile', path: `/profile/${id}`, icon: <PersonIcon />, isSelected: false, clickable: true },
   ]);
 
@@ -118,7 +120,7 @@ const Navbar: React.FC<Props> = (props) => {
               onClick={() => handleRouteChange(route.path, route.clickable)}
             >
               {route.icon}
-              <p>{route.name}</p>
+              <p style={{ fontSize: 11 }}>{route.name}</p>
             </li>
           ))}
         </ul>

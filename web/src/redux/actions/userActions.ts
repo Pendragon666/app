@@ -127,39 +127,24 @@ export const requestNumber = (phoneNumber: string) => (dispatch: any) => {
     });
 };
 
-export const getProfile = () => (dispatch: any) => {
-  axios
-    .get('/api/profile/v1')
-    .then((res) => {
-      dispatch({
-        type: SET_PROFILE,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      // if (err.response.status === 400) {
-      //   dispatch({
-      //     type: SET_CODE,
-      //     payload:
-      //   });
-      //   return dispatch({
-      //     type: SET_MESSAGE,
-      //     payload: {
-      //       message: err.response.data.message,
-      //       show: true,
-      //       type: 'warning',
-      //     },
-      //   });
-      // }
-      dispatch({
-        type: SET_MESSAGE,
-        payload: {
-          message: err.response.data.message,
-          show: true,
-          type: 'error',
-        },
-      });
+export const getProfile = (profile: any) => (dispatch: any) => {
+  dispatch({
+    type: SET_PROFILE,
+    payload: profile,
+  });
+};
+
+export const createProfile = (data: any) => (dispatch: any) => {
+  axios.post('/api/profile/v1', data).then((res) => {
+    dispatch({
+      type: SET_MESSAGE,
+      payload: {
+        show: true,
+        type: 'success',
+        message: res.data.message,
+      },
     });
+  });
 };
 
 export const getUserProfile = (uid: string) => (dispatch: any) => {

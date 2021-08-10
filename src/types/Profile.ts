@@ -6,6 +6,8 @@ export interface ProfileDoc extends Document {
   profileImage: string;
   description: string;
   leagueName: string;
+  inTeam: boolean;
+  region: string;
   _id?: string;
 }
 
@@ -15,5 +17,7 @@ export interface ProfileI {
   profileImage: string;
   description: string;
   leagueName: string;
+  inTeam: boolean;
+  region: string;
   _id?: string;
 }

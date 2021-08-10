@@ -4,13 +4,14 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
-import { AuthRouter, ProfileRouter, SmsRouter } from './routes';
+import { AuthRouter, ProfileRouter, SmsRouter, TeamRouter } from './routes';
 import { errorMiddleware, notFoundMiddlware } from './middlewares/handlers';
 
 import SwaggerUI from 'swagger-ui-express';
 import SwaggerJSON from './swagger.json';
 import { JWT } from './middlewares/jwt';
 import { UserI } from './types/User';
+import { createUsers } from './seed/user';
 
 config();
 
@@ -50,6 +51,7 @@ declare namespace Express {
 
   // Protected Routes
   app.use('/profile/v1', JWT.checkAuth, ProfileRouter);
+  app.use('/team/v1', JWT.checkAuth, TeamRouter);
 
   app.use(notFoundMiddlware);
   app.use(errorMiddleware);
@@ -59,6 +61,9 @@ declare namespace Express {
     useUnifiedTopology: true,
     useCreateIndex: true,
   }).catch(() => console.error('Problem connecting with database, check mongodb connection string'));
+
+  // seeder to create users
+  // createUsers();
 
   app.listen(port, () => console.info(`Server stared on port: ${port}`));
 })();
