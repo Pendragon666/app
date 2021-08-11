@@ -11,7 +11,7 @@ import SwaggerUI from 'swagger-ui-express';
 import SwaggerJSON from './swagger.json';
 import { JWT } from './middlewares/jwt';
 import { UserI } from './types/User';
-import { createUsers } from './seed/user';
+// import { createUsers } from './seed/user';
 
 config();
 
