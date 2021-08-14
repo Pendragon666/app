@@ -4,7 +4,7 @@ import RegisterPage from './Register';
 
 // Private Routes
 import HomePage from './Home';
-import StatsPage from './Stats';
+import LeaderboardPage from './Leaderboard';
 import ProfilePage from './Profile';
 import TournamentPage from './Tournament';
 import SingleTournamentPage from './SingleTournament';
@@ -17,7 +17,7 @@ export {
   TournamentPage,
   RegisterPage,
   HomePage,
-  StatsPage,
+  LeaderboardPage,
   SingleTournamentPage,
   TeamsPage,
   CreateProfilePage,

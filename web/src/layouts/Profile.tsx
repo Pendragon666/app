@@ -250,7 +250,7 @@ const ProfileLayout: React.FC<Props> = (props) => {
         <div className={classes.picture}>
           <img
             src="https://data.whicdn.com/images/322027365/original.jpg?t=1541703413"
-            alt="profile image"
+            alt="profile pic"
             style={{ height: 85, width: 85, borderRadius: '50%' }}
           />
           <div

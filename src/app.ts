@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { Server, Socket } from 'socket.io';
+import { createServer } from 'http';
 import { connect } from 'mongoose';
 import { config } from 'dotenv';
 import { AuthRouter, ProfileRouter, SmsRouter, TeamRouter } from './routes';
@@ -61,9 +63,22 @@ declare namespace Express {
     useUnifiedTopology: true,
     useCreateIndex: true,
   }).catch(() => console.error('Problem connecting with database, check mongodb connection string'));
+  app.set('port', port);
+
+  const http = createServer(app);
+
+  const io = new Server(http, {
+    cors: {
+      origin: '*',
+    },
+  });
+
+  io.on('connection', function (socket: Socket) {
+    console.info('a user connected');
+  });
+
+  http.listen(port, () => console.info(`Server started on port ${port}`));
 
   // seeder to create users
   // createUsers();
-
-  app.listen(port, () => console.info(`Server stared on port: ${port}`));
 })();

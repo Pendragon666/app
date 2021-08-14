@@ -34,7 +34,7 @@ const Stats: React.FC = (props: any) => {
           width: '100%',
         }}
       >
-        <h1>Statistics Page</h1>
+        <h1>Leaderboard Page</h1>
       </div>
     </div>
   );

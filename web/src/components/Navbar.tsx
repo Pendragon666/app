@@ -1,16 +1,19 @@
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 // import { logoutUser } from 'redux/actions/userActions';
 // import { useDispatch } from 'react-redux';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import GroupIcon from '@material-ui/icons/Group';
-import React from 'react';
+import {
+  Home as HomeIcon,
+  Person as PersonIcon,
+  SportsEsports as SportsEsportsIcon,
+  Group as GroupIcon,
+  Star as StarIcon,
+} from '@material-ui/icons';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useSpring, animated } from 'react-spring';
 
 interface Props {
   classes: any;
@@ -20,12 +23,12 @@ interface Props {
 const styles = createStyles((theme: Theme) => ({
   container: {
     [theme.breakpoints.down('sm')]: {
-      backgroundImage: 'linear-gradient(315deg, #485461 0%, #28313b 74%)',
       width: '100vw',
       height: 'auto',
       display: 'flex',
       flexDirection: 'column-reverse',
       justifyContent: 'space-between',
+      // margin: 2,
     },
   },
   layout: {
@@ -35,18 +38,21 @@ const styles = createStyles((theme: Theme) => ({
       alignItems: 'center',
       listStyle: 'none',
       '& li': {
-        padding: '4.5px 0',
+        padding: '10.5px 0',
         fontSize: 13,
-        color: 'white',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        '&:hover': {
-          backgroundColor: 'rgb(7, 177, 77, 0.42)',
-        },
+        color: 'gray',
       },
+    },
+  },
+  iconActive: {
+    [theme.breakpoints.down('sm')]: {
+      boxShadow: '0 4px 0px -2px rgba(204,57,57,0.9)',
+      color: 'rgba(204,57,57,0.9)',
     },
   },
   layoutButtons: {
@@ -54,40 +60,66 @@ const styles = createStyles((theme: Theme) => ({
       fontSize: 18,
     },
   },
+  empty: {},
 }));
 
 const Navbar: React.FC<Props> = (props) => {
   const { classes, history } = props;
 
+  const animation = useSpring({ from: { marginLeft: 0 }, to: { marginLeft: 0 } });
+
   const id = useSelector((state: any) => state.user.user._id);
 
   const [routes, setRoutes] = useState([
-    { name: 'Home', path: '/', icon: <HomeIcon />, isSelected: false, clickable: true },
-    { name: 'Tournaments', path: '/tournaments', icon: <SportsEsportsIcon />, isSelected: false, clickable: true },
-    { name: 'Statistics', path: '/stats', icon: <EqualizerIcon />, isSelected: false, clickable: true },
-    { name: 'Teams', path: '/teams', icon: <GroupIcon />, isSelected: false, clickable: true },
-    { name: 'Profile', path: `/profile/${id}`, icon: <PersonIcon />, isSelected: false, clickable: true },
+    { value: 'main', path: '/', icon: <HomeIcon />, isSelected: false, clickable: true, isMiddle: false },
+    {
+      value: 'tournaments',
+      path: '/tournaments',
+      icon: <SportsEsportsIcon />,
+      isSelected: false,
+      clickable: true,
+      isMiddle: false,
+    },
+    {
+      value: 'leaderboard',
+      path: '/leaderboard',
+      icon: <StarIcon />,
+      isSelected: false,
+      clickable: true,
+      isMiddle: true,
+    },
+    { value: 'teams', path: '/teams', icon: <GroupIcon />, isSelected: false, clickable: true, isMiddle: false },
+    {
+      value: 'profile',
+      path: `/profile/${id}`,
+      icon: <PersonIcon />,
+      isSelected: false,
+      clickable: true,
+      isMiddle: false,
+    },
   ]);
 
   useEffect(() => {
     setRoutes(
-      routes.map((route) => {
-        if (route.path === history.location.pathname) {
+      routes.map((r) => {
+        if (r.path === history.location.pathname) {
           return {
-            ...route,
+            ...r,
             isSelected: true,
             clickable: false,
           };
         }
-        return route;
+        return {
+          ...r,
+          isSelected: false,
+        };
       }),
     );
-
     if (id) {
       if (history.location.pathname.split('/')[2] === id) {
         setRoutes(
           routes.map((route) => {
-            if (route.name === 'Profile') {
+            if (route.value === 'profile') {
               return {
                 ...route,
                 isSelected: true,
@@ -99,9 +131,8 @@ const Navbar: React.FC<Props> = (props) => {
         );
       }
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history.location.pathname, id]);
+  }, [id]);
 
   const handleRouteChange = (location: string, clickable: boolean) => {
     if (clickable) {
@@ -112,18 +143,13 @@ const Navbar: React.FC<Props> = (props) => {
   return (
     <>
       <div className={classes.container}>
-        <ul className={classes.layout}>
-          {routes.map((route) => (
-            <li
-              key={route.name}
-              style={route.isSelected ? { backgroundColor: 'green' } : {}}
-              onClick={() => handleRouteChange(route.path, route.clickable)}
-            >
-              {route.icon}
-              <p style={{ fontSize: 11 }}>{route.name}</p>
+        <animated.ul className={classes.layout} style={animation}>
+          {routes.map((route, i) => (
+            <li key={i} onClick={() => handleRouteChange(route.path, route.clickable)}>
+              <div className={route.isSelected ? classes.iconActive : ''}>{route.icon}</div>
             </li>
           ))}
-        </ul>
+        </animated.ul>
       </div>
     </>
   );

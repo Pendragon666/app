@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import io from 'socket.io-client';
 import { SnackbarProvider } from 'notistack';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,10 +11,10 @@ import {
   LoginPage,
   ProfilePage,
   RegisterPage,
-  StatsPage,
   TournamentPage,
   SingleTournamentPage,
   TeamsPage,
+  LeaderboardPage,
 } from 'pages';
 import { PublicRoute, PrivateRoute } from 'uikits';
 import { Snackbar } from '@material-ui/core';
@@ -21,8 +22,14 @@ import { Alert } from '@material-ui/lab';
 import { clearMessage } from 'redux/actions/uiActions';
 import { Workbox } from 'workbox-window';
 
+const socket = io('http://localhost:5000/');
+
 const App: React.FC = () => {
   useEffect(() => {
+    socket.on('connection', (socket) => {
+      console.info(socket);
+    });
+
     if ('serviceWorker' in navigator) {
       const wb = new Workbox('/sw.js');
 
@@ -60,7 +67,7 @@ const App: React.FC = () => {
 
             {/* Private Routes */}
             <PrivateRoute path="/" component={HomePage} exact />
-            <PrivateRoute path="/stats" component={StatsPage} exact />
+            <PrivateRoute path="/leaderboard" component={LeaderboardPage} exact />
             <PrivateRoute path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
             <PrivateRoute path="/tournaments" component={TournamentPage} exact />
             <PrivateRoute path="/teams" component={TeamsPage} exact />
