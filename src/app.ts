@@ -73,7 +73,7 @@ declare namespace Express {
     },
   });
 
-  io.on('connection', function (socket: Socket) {
+  io.on('connection', function (_: Socket) {
     console.info('a user connected');
   });
 
