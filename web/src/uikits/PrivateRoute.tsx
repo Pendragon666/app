@@ -42,8 +42,7 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
   const GetProfile = (uid: string) => dispatch(getProfile(uid));
 
   useEffect(() => {
-    const url =
-      process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https//development.pendragon.gg/api/';
+    const url = process.env.NODE_ENV === 'development' ? 'ws://localhost/api/' : 'ws://development.pendragon.gg/api/';
     const socket = io(url, {
       query: { token: state.token },
     });
