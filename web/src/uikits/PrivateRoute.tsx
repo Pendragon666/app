@@ -46,7 +46,7 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
 
     const socket = io(url, {
       query: { token: state.token },
-      path: '/api/socket-io/',
+      path: '/api/socket.io/',
       secure: process.env.NODE_ENV === 'production',
     });
     if (!Profile.profile?.inTeam && Profile.profile?.inTeam !== undefined) {
