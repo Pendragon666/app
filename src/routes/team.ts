@@ -6,6 +6,7 @@ import {
   getTeams,
   removePlayerFromTeam,
   removeTeam,
+  sendInvite,
 } from '../controllers/team.controller';
 
 const router = Router();
@@ -16,5 +17,6 @@ router.delete('/:id', removeTeam);
 router.post('/create', createTeam);
 router.post('/:teamId/addPlayer/:playerId', addPlayerToTeam);
 router.delete('/:teamId/addPlayer/:playerId', removePlayerFromTeam);
+router.post('/:teamId/invite/:playerId', sendInvite);
 
 export default router;

@@ -1,59 +1,71 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
 import decode from 'jwt-decode';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { setUser } from 'redux/actions/userActions';
+import { setInvite } from 'redux/actions/uiActions';
+import { getProfile, setUser } from 'redux/actions/userActions';
+import { useAppSelector } from 'redux/hooks';
+import { UserState } from 'redux/reducers/userReducer';
+import io from 'socket.io-client';
 
 const CheckAuth = () => {
-  const token = Cookie.get('P-Token');
+  let token = Cookie.get('P-Token');
   let user: any;
 
   if (!token) {
-    return { authenticated: false, user };
+    token = '';
+    return { authenticated: false, user, token };
   }
   try {
     user = decode(token);
     if (user.exp < new Date().getTime() / 1000) {
       Cookie.remove('P-Token');
-      return { authenticated: false, user };
+      token = '';
+      return { authenticated: false, user, token };
     }
     axios.defaults.headers.common['P-Token'] = token; //setting authorize token to header in axios
-
-    // axios.interceptors.response.use(
-    //   function (response) {
-    //     // Any status code that lie within the range of 2xx cause this function to trigger
-    //     // Do something with response data
-    //     return response;
-    //   },
-    //   function (error) {
-    //     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    //     // Do something with response error
-    //   },
-    // );
   } catch (e) {
-    return { authenticated: false, user };
+    return { authenticated: false, user, token };
   }
-  return { authenticated: true, user };
+  return { authenticated: true, user, token };
 };
 
 const PrivateRoute = ({ component: Component, ...rest }: any) => {
+  const state = useMemo(() => CheckAuth(), []);
+  const Profile: UserState = useAppSelector((state) => state.user);
+
   const dispatch = useDispatch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const SetUser = (data: any) => dispatch(setUser(data));
+  const SetInvite = (data: any) => dispatch(setInvite(data));
+  const GetProfile = (uid: string) => dispatch(getProfile(uid));
 
   useEffect(() => {
-    if (CheckAuth().authenticated) {
-      SetUser(CheckAuth().user);
+    const url =
+      process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https//development.pendragon.gg/api/';
+    const socket = io(url, {
+      query: { token: state.token },
+    });
+    if (!Profile.profile?.inTeam && Profile.profile?.inTeam !== undefined) {
+      socket.on('team_invitation', (msg) => {
+        const { _id, teamName, teamImage, invitationId } = JSON.parse(msg);
+        SetInvite({ teamInvite: { id: _id, name: teamName, image: teamImage, invited: true, invitationId } });
+      });
     }
-  }, [SetUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [Profile]);
+
+  useEffect(() => {
+    if (state.authenticated) {
+      SetUser(state.user);
+      GetProfile(state.user._id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return (
-    <Route
-      {...rest}
-      render={(props) => (CheckAuth().authenticated ? <Component {...props} /> : <Redirect to="/login" />)}
-    />
+    <Route {...rest} render={(props) => (state.authenticated ? <Component {...props} /> : <Redirect to="/login" />)} />
   );
 };
 

@@ -1,10 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import uiReducer from './reducers/uiReducer';
 import userReducer from './reducers/userReducer';
 
 const initialState = {};
-const middleware = [thunk];
+const middleware = [thunk, logger];
 //this is for redux devtool purpose
 declare global {
   interface Window {
@@ -12,9 +13,8 @@ declare global {
   }
 }
 const reducer = combineReducers({
-  user: userReducer, //user key ma store gareko
+  user: userReducer,
   UI: uiReducer,
-  //  UI: uiReducer
 });
 const store = createStore(
   reducer,
@@ -25,4 +25,8 @@ const store = createStore(
     // window.__REDUX_DEVTOOLS_EXTENSION__()) as any
   ),
 );
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 export default store;

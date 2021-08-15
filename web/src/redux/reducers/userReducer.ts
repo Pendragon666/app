@@ -1,6 +1,6 @@
 import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE, SET_PROFILE } from '../types/user';
 
-interface InitialState {
+export interface UserState {
   authenticated: boolean;
   user: {
     _id?: string;
@@ -23,7 +23,7 @@ interface InitialState {
   };
 }
 
-export const initialState: InitialState = {
+export const initialState: UserState = {
   authenticated: false,
   user: {},
   profile: {},
@@ -63,7 +63,7 @@ export default function (state = initialState, action: any) {
     case SET_PROFILE:
       return {
         ...state,
-        ...action.payload,
+        profile: action.payload,
       };
     default:
       return state;

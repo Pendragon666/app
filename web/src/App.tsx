@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import io from 'socket.io-client';
+// import io, { Socket } from 'socket.io-client';
 import { SnackbarProvider } from 'notistack';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Routes
@@ -17,20 +16,24 @@ import {
   LeaderboardPage,
 } from 'pages';
 import { PublicRoute, PrivateRoute } from 'uikits';
-import { Snackbar } from '@material-ui/core';
+import {
+  Snackbar,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { clearMessage } from 'redux/actions/uiActions';
+import { clearMessage, respondToInvite } from 'redux/actions/uiActions';
 import { Workbox } from 'workbox-window';
-
-const socket = io('http://localhost:5000/');
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { UIState } from 'redux/reducers/uiReducer';
 
 const App: React.FC = () => {
   useEffect(() => {
-    socket.on('connection', (socket) => {
-      console.info(socket);
-    });
-
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       const wb = new Workbox('/sw.js');
 
       wb.addEventListener('installed', (event) => {
@@ -52,9 +55,14 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const UI = useSelector((state: any) => state.UI);
-  const dispatch = useDispatch();
+  const UI: UIState = useAppSelector((state) => state.UI);
+  const dispatch = useAppDispatch();
   const ClearMessage = () => dispatch(clearMessage());
+  const RespondToInvite = (teamId: string, accept: boolean) => dispatch(respondToInvite(teamId, accept));
+
+  const handleClose = (accept: boolean) => {
+    return RespondToInvite(UI.teamInvite.id, accept);
+  };
 
   return (
     <>
@@ -90,6 +98,23 @@ const App: React.FC = () => {
             {UI.message}
           </Alert>
         </Snackbar>
+        <Dialog open={UI.teamInvite.invited} aria-labelledby="responsive-dialog-title">
+          <DialogTitle id="responsive-dialog-title">Invitation</DialogTitle>
+          <DialogContent
+            style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}
+          >
+            <img src={UI.teamInvite.image} alt="team" style={{ height: 70, marginBottom: 20 }} />
+            <DialogContentText>You've been invited to team {UI.teamInvite.name}.</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => handleClose(false)} color="secondary">
+              Decline
+            </Button>
+            <Button onClick={() => handleClose(true)} color="secondary">
+              Accept
+            </Button>
+          </DialogActions>
+        </Dialog>
       </SnackbarProvider>
     </>
   );

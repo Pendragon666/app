@@ -35,6 +35,19 @@ export class JWT {
     return next();
   }
 
+  public static verifySocketToken(next: any, socket: any) {
+    if (socket.handshake.query.token) {
+      jwt.verify(socket.handshake.query.token, process.env.REFRESH_TOKEN_SECRET!, (_: any, user: any) => {
+        if (user) {
+          //@ts-ignore
+          socket.user = user;
+        }
+      });
+      return next();
+    }
+    return next(new Error('ar daqoneqtdi'));
+  }
+
   public static checkAuth(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     if (req.user) {

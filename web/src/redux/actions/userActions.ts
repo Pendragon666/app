@@ -127,11 +127,16 @@ export const requestNumber = (phoneNumber: string) => (dispatch: any) => {
     });
 };
 
-export const getProfile = (profile: any) => (dispatch: any) => {
-  dispatch({
-    type: SET_PROFILE,
-    payload: profile,
-  });
+export const getProfile = (id: string) => (dispatch: any) => {
+  axios
+    .get(`/api/profile/v1/${id}`)
+    .then((res) => {
+      dispatch({
+        type: SET_PROFILE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.error(err));
 };
 
 export const createProfile = (data: any) => (dispatch: any) => {
