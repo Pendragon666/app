@@ -43,8 +43,10 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
 
   useEffect(() => {
     const url = process.env.NODE_ENV === 'development' ? 'ws://localhost/api/' : 'ws://development.pendragon.gg/api/';
+
     const socket = io(url, {
       query: { token: state.token },
+      secure: !(process.env.NODE_ENV === 'development'),
     });
     if (!Profile.profile?.inTeam && Profile.profile?.inTeam !== undefined) {
       socket.on('team_invitation', (msg) => {
