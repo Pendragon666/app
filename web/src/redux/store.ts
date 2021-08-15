@@ -5,7 +5,11 @@ import uiReducer from './reducers/uiReducer';
 import userReducer from './reducers/userReducer';
 
 const initialState = {};
-const middleware = [thunk, logger];
+const middleware = [thunk];
+if (process.env.NODE_ENV === 'development') {
+  // @ts-ignore
+  middleware.push(logger);
+}
 //this is for redux devtool purpose
 declare global {
   interface Window {

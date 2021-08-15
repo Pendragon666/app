@@ -42,14 +42,15 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
   const GetProfile = (uid: string) => dispatch(getProfile(uid));
 
   useEffect(() => {
-    const url = process.env.NODE_ENV === 'development' ? 'ws://localhost/api/' : 'ws://development.pendragon.gg/api/';
+    const url = process.env.NODE_ENV === 'development' ? 'ws://localhost/' : 'ws://development.pendragon.gg/';
 
     const socket = io(url, {
       query: { token: state.token },
-      secure: !(process.env.NODE_ENV === 'development'),
+      path: '/api/socket-io/',
+      secure: process.env.NODE_ENV === 'production',
     });
     if (!Profile.profile?.inTeam && Profile.profile?.inTeam !== undefined) {
-      socket.on('team_invitation', (msg) => {
+      socket.once('team_invitation', (msg) => {
         const { _id, teamName, teamImage, invitationId } = JSON.parse(msg);
         SetInvite({ teamInvite: { id: _id, name: teamName, image: teamImage, invited: true, invitationId } });
       });
