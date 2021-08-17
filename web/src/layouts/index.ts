@@ -1,3 +1,4 @@
 import ProfileLayout from './Profile';
+import CreateProfile from './CreateProfile';
 
-export { ProfileLayout };
+export { ProfileLayout, CreateProfile };

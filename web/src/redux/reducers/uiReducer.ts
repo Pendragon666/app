@@ -1,4 +1,4 @@
-import { CLEAR_MESSAGE, LOADING_UI, SET_INVITE, SET_MESSAGE } from 'redux/types/ui';
+import { CLEAR_MESSAGE, SET_LOADING, SET_INVITE, SET_MESSAGE } from 'redux/types/ui';
 
 enum Type {
   SUCCESS = 'success',
@@ -45,10 +45,10 @@ export default function (state = initialState, action: any) {
         ...state,
         ...action.payload,
       };
-    case LOADING_UI:
+    case SET_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     case SET_INVITE:
       return {

@@ -8,10 +8,9 @@ RUN yarn install && yarn build
  
 FROM nginx
 
-WORKDIR /usr/share/nginx/
+WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
-RUN mkdir webapp
-COPY --from=builder /app/build ./webapp
+COPY --from=builder /app/build ./
 
 
 # /usr/share/nginx/webapp

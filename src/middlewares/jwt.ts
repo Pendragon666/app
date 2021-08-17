@@ -12,7 +12,7 @@ export class JWT {
 
   public static createRefreshToken(user: UserToken) {
     const refreshToken = jwt.sign(
-      { _id: user._id, email: user.email, username: user.username, birthday: user.birthday },
+      { _id: user._id, email: user.email, username: user.username, birthday: user.birthday, verified: user.verified },
       process.env.REFRESH_TOKEN_SECRET!,
       {
         expiresIn: '365d',

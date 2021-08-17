@@ -10,7 +10,7 @@ interface ProfileI {
 
 export const getProfile = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   try {
-    const profile = await Profile.findOne({ uid: req.params.uid });
+    const profile = await Profile.findOne({ uid: req.user._id });
     return res.status(200).json(profile);
   } catch (error) {
     return next(error);
@@ -21,8 +21,8 @@ export const createProfile = async (req: Request, res: Response, next: NextFunct
   try {
     const { fullName, region, description = '', leagueName } = req.body as ProfileI;
     if (fullName && region && leagueName) {
-      await Profile.create({ fullName, region, description, leagueName, uid: req.user._id });
-      return res.status(200).json({ success: true, message: 'Profile Created' });
+      const profile = await Profile.create({ fullName, region, description, leagueName, uid: req.user._id });
+      return res.status(200).json({ success: true, message: 'Profile Created', profile });
     }
     res.status(400);
     throw new Error('badRequest');

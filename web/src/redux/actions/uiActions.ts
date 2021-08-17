@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { CLEAR_MESSAGE, SET_INVITE, SET_MESSAGE } from 'redux/types/ui';
+import { CLEAR_MESSAGE, SET_INVITE, SET_LOADING, SET_MESSAGE } from 'redux/types/ui';
+
+export const setLoading = (loading: boolean) => (dispatch: any) => dispatch({ type: SET_LOADING, payload: loading });
 
 export const clearMessage = () => (dispatch: any) => {
   dispatch({ type: CLEAR_MESSAGE });

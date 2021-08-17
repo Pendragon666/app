@@ -7,7 +7,9 @@ export interface UserState {
     email?: string;
     username?: string;
     birthday?: string;
+    verified?: boolean;
   };
+  profileCreated: boolean;
   profile: {
     description?: string;
     fullName?: string;
@@ -26,6 +28,7 @@ export interface UserState {
 export const initialState: UserState = {
   authenticated: false,
   user: {},
+  profileCreated: false,
   profile: {},
   loading: false,
   code: {
@@ -64,6 +67,7 @@ export default function (state = initialState, action: any) {
       return {
         ...state,
         profile: action.payload,
+        profileCreated: action.profileCreated,
       };
     default:
       return state;

@@ -1,6 +1,8 @@
 import { Button, createStyles, Theme, Tooltip, withStyles } from '@material-ui/core';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import React from 'react';
+import { useAppSelector } from 'redux/hooks';
+import { UserState } from 'redux/reducers/userReducer';
 
 interface Props {
   classes: any;
@@ -244,14 +246,19 @@ const styles = createStyles((theme: Theme) => ({
 
 const ProfileLayout: React.FC<Props> = (props) => {
   const { classes } = props;
+
+  const {
+    profile,
+    user: { verified },
+  }: UserState = useAppSelector((state) => state.user);
   return (
     <div className={classes.main}>
       <div className={classes.info}>
         <div className={classes.picture}>
           <img
-            src="https://data.whicdn.com/images/322027365/original.jpg?t=1541703413"
+            src="https://thumbs.dreamstime.com/b/red-vector-man-profile-icon-illustration-117495649.jpg"
             alt="profile pic"
-            style={{ height: 85, width: 85, borderRadius: '50%' }}
+            style={{ height: 85, width: 85, borderRadius: '50%', border: '0.5px solid red' }}
           />
           <div
             style={{
@@ -261,13 +268,18 @@ const ProfileLayout: React.FC<Props> = (props) => {
               alignItems: 'center',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-              <h3>Sebastian Maisuradze</h3>
-              <Tooltip title="Verified" aria-label="verified" color="secondary">
-                <VerifiedUserIcon />
-              </Tooltip>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', textAlign: 'center' }}>
+              <h3>{profile.fullName}</h3>
+              {verified ? (
+                <Tooltip title="Verified" aria-label="verified" color="secondary" style={{ marginLeft: 5 }}>
+                  <VerifiedUserIcon />
+                </Tooltip>
+              ) : (
+                <></>
+              )}
             </div>
-            <p>@bluespringflowers</p>
+            <p style={{ marginRight: 5, fontWeight: 200 }}>@{profile.leagueName}</p>
+            {/* {profile.inTeam ? <p>Amogus</p> : <></>} */}
           </div>
         </div>
       </div>

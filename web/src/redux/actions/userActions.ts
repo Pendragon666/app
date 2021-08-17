@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { SET_MESSAGE } from 'redux/types/ui';
+import { SET_LOADING, SET_MESSAGE } from 'redux/types/ui';
 import { SET_PROFILE, SET_UNAUTHENTICATED, SET_CODE, SET_USER } from '../types/user';
 
 export const setUser = (userData: any) => (dispatch: any) => {
@@ -127,13 +127,29 @@ export const requestNumber = (phoneNumber: string) => (dispatch: any) => {
     });
 };
 
-export const getProfile = (id: string) => (dispatch: any) => {
+export const getProfile = () => (dispatch: any) => {
+  dispatch({
+    type: SET_LOADING,
+    payload: true,
+  });
   axios
-    .get(`/api/profile/v1/${id}`)
+    .get('/api/profile/v1/')
     .then((res) => {
+      if (res.data !== null) {
+        dispatch({
+          type: SET_PROFILE,
+          payload: res.data,
+          profileCreated: true,
+        });
+      } else {
+        dispatch({
+          type: SET_PROFILE,
+          profileCreated: false,
+        });
+      }
       dispatch({
-        type: SET_PROFILE,
-        payload: res.data,
+        type: SET_LOADING,
+        payload: false,
       });
     })
     .catch((err) => console.error(err));
@@ -149,40 +165,10 @@ export const createProfile = (data: any) => (dispatch: any) => {
         message: res.data.message,
       },
     });
-  });
-};
-
-export const getUserProfile = (uid: string) => (dispatch: any) => {
-  axios
-    .get(`/api/profile/v1/${uid}`)
-    .then((res) => {
-      dispatch({
-        type: SET_PROFILE,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      // if (err.response.status === 400) {
-      //   dispatch({
-      //     type: SET_CODE,
-      //     payload:
-      //   });
-      //   return dispatch({
-      //     type: SET_MESSAGE,
-      //     payload: {
-      //       message: err.response.data.message,
-      //       show: true,
-      //       type: 'warning',
-      //     },
-      //   });
-      // }
-      dispatch({
-        type: SET_MESSAGE,
-        payload: {
-          message: err.response.data.message,
-          show: true,
-          type: 'error',
-        },
-      });
+    dispatch({
+      type: SET_PROFILE,
+      payload: res.data.profile,
+      profileCreated: true,
     });
+  });
 };

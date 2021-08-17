@@ -9,7 +9,6 @@ import ProfilePage from './Profile';
 import TournamentPage from './Tournament';
 import SingleTournamentPage from './SingleTournament';
 import TeamsPage from './Teams';
-import CreateProfilePage from './CreateProfile';
 
 export {
   LoginPage,
@@ -20,5 +19,4 @@ export {
   LeaderboardPage,
   SingleTournamentPage,
   TeamsPage,
-  CreateProfilePage,
 };

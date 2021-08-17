@@ -3,7 +3,7 @@ import { createProfile, getProfile } from '../controllers/profile.controller';
 
 const router = Router();
 
-router.get('/:uid', getProfile);
+router.get('/', getProfile);
 router.post('/', createProfile);
 
 export default router;
