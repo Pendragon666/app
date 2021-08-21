@@ -45,12 +45,12 @@ const PrivateRoute = ({ component: Component, ...rest }: any) => {
   const SetInvite = (data: any) => dispatch(setInvite(data));
   const GetProfile = () => dispatch(getProfile());
 
-  const uri = process.env.NODE_ENV === 'production' ? 'ws://development.pendragon.gg' : 'ws://localhost';
+  const uri = process.env.NODE_ENV === 'production' ? 'wss://development.pendragon.gg' : 'ws://localhost';
 
   useEffect(() => {
     const socket = io(uri, {
       query: { token: state.token },
-      secure: process.env.NODE_ENV === 'production',
+
     });
     if (!Profile.profile?.inTeam && Profile.profile?.inTeam !== undefined) {
       socket.once('team_invitation', (msg) => {
