@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy } from 'react';
 // import io, { Socket } from 'socket.io-client';
 import { SnackbarProvider } from 'notistack';
 
@@ -15,7 +15,6 @@ import {
   TeamsPage,
   LeaderboardPage,
 } from 'pages';
-import { PublicRoute, PrivateRoute } from 'uikits';
 import {
   Snackbar,
   Dialog,
@@ -32,6 +31,9 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { UIState } from 'redux/reducers/uiReducer';
 
 const App: React.FC = () => {
+  const PrivateRouteComponent = lazy(() => import('./uikits/PrivateRoute'));
+  const PublicRouteComponent = lazy(() => import('./uikits/PublicRoute'));
+
   useEffect(() => {
     if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
       const wb = new Workbox('/sw.js');
@@ -70,16 +72,16 @@ const App: React.FC = () => {
         <Router>
           <Switch>
             {/* Public Routes */}
-            <PublicRoute path="/login" component={LoginPage} exact />
-            <PublicRoute path="/register" component={RegisterPage} exact />
+            <PublicRouteComponent path="/login" component={LoginPage} exact />
+            <PublicRouteComponent path="/register" component={RegisterPage} exact />
 
             {/* Private Routes */}
-            <PrivateRoute path="/" component={HomePage} exact />
-            <PrivateRoute path="/leaderboard" component={LeaderboardPage} exact />
-            <PrivateRoute path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
-            <PrivateRoute path="/tournaments" component={TournamentPage} exact />
-            <PrivateRoute path="/teams" component={TeamsPage} exact />
-            <PrivateRoute
+            <PrivateRouteComponent path="/" component={HomePage} exact />
+            <PrivateRouteComponent path="/leaderboard" component={LeaderboardPage} exact />
+            <PrivateRouteComponent path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
+            <PrivateRouteComponent path="/tournaments" component={TournamentPage} exact />
+            <PrivateRouteComponent path="/teams" component={TeamsPage} exact />
+            <PrivateRouteComponent
               path="/tournaments/:id"
               component={(props: any) => <SingleTournamentPage {...props} />}
               exact
