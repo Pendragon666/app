@@ -1,6 +1,6 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { Button, createStyles, TextField, withStyles } from '@material-ui/core';
+import { Button, createStyles, TextField, Theme, withStyles } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { useState } from 'react';
 import { createUser, requestNumber } from 'redux/actions/userActions';
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { isEmail, isNum } from 'utils/validators';
 
-const styles = createStyles({
+const styles = createStyles((theme: Theme) => ({
   main: {
     width: '100vw',
     height: '100vh',
@@ -23,10 +23,26 @@ const styles = createStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
+    width: '20rem',
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
   },
   btn: {
     marginTop: '1rem',
-    width: '20rem',
+  },
+  alreadyUser: {
+    marginLeft: 'auto',
+    color: '#303E4E',
+    cursor: 'pointer',
+    marginTop: 15,
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
   textField: {
     height: 50,
@@ -68,7 +84,7 @@ const styles = createStyles({
       // transitionProperty: "background-color, color",
     },
   },
-});
+}));
 
 const Register: React.FC = (props: any) => {
   const { classes } = props;
@@ -430,10 +446,7 @@ const Register: React.FC = (props: any) => {
             </>
           )}
 
-          <p
-            style={{ marginLeft: 'auto', color: 'white', cursor: 'pointer', marginTop: 15 }}
-            onClick={() => history.push('/login')}
-          >
+          <p className={classes.alreadyUser} onClick={() => history.push('/login')}>
             Already an user? log in
           </p>
         </form>
