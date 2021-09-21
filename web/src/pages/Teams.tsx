@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import { Navbar } from 'components';
+import { TeamLayout } from 'layouts';
 
 const styles = createStyles((theme: Theme) => ({
   main: {
@@ -32,9 +33,10 @@ const Teams: React.FC = (props: any) => {
           alignItems: 'center',
           justifyContent: 'center',
           width: '100%',
+          height: '100%',
         }}
       >
-        <h1>Teams Page</h1>
+        <TeamLayout />
       </div>
     </div>
   );

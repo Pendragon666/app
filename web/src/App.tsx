@@ -23,6 +23,7 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  ThemeProvider,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { clearMessage, respondToInvite } from 'redux/actions/uiActions';
@@ -30,6 +31,7 @@ import { Workbox } from 'workbox-window';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { UIState } from 'redux/reducers/uiReducer';
 import { PrivateRoute, PublicRoute } from 'uikits';
+import theme from 'theme';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -66,56 +68,58 @@ const App: React.FC = () => {
 
   return (
     <>
-      <SnackbarProvider maxSnack={3}>
-        <Router>
-          <Switch>
-            {/* Public Routes */}
-            <PublicRoute path="/login" component={LoginPage} exact />
-            <PublicRoute path="/register" component={RegisterPage} exact />
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
+          <Router>
+            <Switch>
+              {/* Public Routes */}
+              <PublicRoute path="/login" component={LoginPage} exact />
+              <PublicRoute path="/register" component={RegisterPage} exact />
 
-            {/* Private Routes */}
-            <PrivateRoute path="/" component={HomePage} exact />
-            <PrivateRoute path="/leaderboard" component={LeaderboardPage} exact />
-            <PrivateRoute path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
-            <PrivateRoute path="/tournaments" component={TournamentPage} exact />
-            <PrivateRoute path="/teams" component={TeamsPage} exact />
-            <PrivateRoute
-              path="/tournaments/:id"
-              component={(props: any) => <SingleTournamentPage {...props} />}
-              exact
-            />
+              {/* Private Routes */}
+              <PrivateRoute path="/" component={HomePage} exact />
+              <PrivateRoute path="/leaderboard" component={LeaderboardPage} exact />
+              <PrivateRoute path="/profile/:uid" component={(props: any) => <ProfilePage {...props} />} exact />
+              <PrivateRoute path="/tournaments" component={TournamentPage} exact />
+              <PrivateRoute path="/teams" component={TeamsPage} exact />
+              <PrivateRoute
+                path="/tournaments/:id"
+                component={(props: any) => <SingleTournamentPage {...props} />}
+                exact
+              />
 
-            <Route path="/" render={() => <div>NOT FOUND</div>} />
-          </Switch>
-        </Router>
-        <Snackbar
-          open={UI.show}
-          autoHideDuration={2500}
-          onClose={() => ClearMessage()}
-          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        >
-          <Alert onClose={() => ClearMessage()} severity={UI.type}>
-            {UI.message}
-          </Alert>
-        </Snackbar>
-        <Dialog open={UI.teamInvite.invited} aria-labelledby="responsive-dialog-title">
-          <DialogTitle id="responsive-dialog-title">Invitation</DialogTitle>
-          <DialogContent
-            style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}
+              <Route path="/" render={() => <div>NOT FOUND</div>} />
+            </Switch>
+          </Router>
+          <Snackbar
+            open={UI.show}
+            autoHideDuration={2500}
+            onClose={() => ClearMessage()}
+            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
           >
-            <img src={UI.teamInvite.image} alt="team" style={{ height: 70, marginBottom: 20 }} />
-            <DialogContentText>You've been invited to team {UI.teamInvite.name}.</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => handleClose(false)} color="secondary">
-              Decline
-            </Button>
-            <Button onClick={() => handleClose(true)} color="secondary">
-              Accept
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </SnackbarProvider>
+            <Alert onClose={() => ClearMessage()} severity={UI.type}>
+              {UI.message}
+            </Alert>
+          </Snackbar>
+          <Dialog open={UI.teamInvite.invited} aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">Invitation</DialogTitle>
+            <DialogContent
+              style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}
+            >
+              <img src={UI.teamInvite.image} alt="team" style={{ height: 70, marginBottom: 20 }} />
+              <DialogContentText>You've been invited to team {UI.teamInvite.name}.</DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => handleClose(false)} color="secondary">
+                Decline
+              </Button>
+              <Button onClick={() => handleClose(true)} color="secondary">
+                Accept
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </SnackbarProvider>
+      </ThemeProvider>
     </>
   );
 };

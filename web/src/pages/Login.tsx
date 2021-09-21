@@ -1,30 +1,37 @@
 import React from 'react';
-import { Button, createStyles, TextField, withStyles } from '@material-ui/core';
+import { Button, createStyles, TextField, withStyles, Theme } from '@material-ui/core';
 import { useState } from 'react';
 import { loginUser } from 'redux/actions/userActions';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { isEmail } from 'utils/validators';
 
-const styles = createStyles({
+const styles = createStyles((theme: Theme) => ({
   main: {
     width: '100vw',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: "url('https://static2.lolwallpapers.net/2016/07/57868bc3a88f1.jpg')",
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: '70% 30%',
     backgroundSize: 'cover',
+    backgroundImage:
+      'url("https://www.lifewire.com/thmb/xWwU0qxUmS6CZ9Vqgx1zXTNvQEA=/1250x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/wallhaven-5919d60a5f9b58f4c04e8b26.png")',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
+    width: '20rem',
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    },
   },
   btn: {
     marginTop: '1rem',
-    width: '10rem',
   },
   textField: {
     height: 50,
@@ -49,9 +56,8 @@ const styles = createStyles({
   buttons: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '400px',
   },
-});
+}));
 
 interface Fields {
   error: boolean;
@@ -121,7 +127,6 @@ const Login: React.FC = (props: any) => {
           placeholder="Email"
           type="email"
           value={email.value}
-          error={email.error}
           autoComplete="nope"
           onChange={(e) => handleChange(e.target.value, 'email')}
           inputProps={{
@@ -133,7 +138,6 @@ const Login: React.FC = (props: any) => {
           placeholder="Password"
           type="password"
           value={password.value}
-          error={password.error}
           autoComplete="nope"
           onChange={(e) => handleChange(e.target.value, 'password')}
           inputProps={{
@@ -141,10 +145,15 @@ const Login: React.FC = (props: any) => {
           }}
         />
         <div className={classes.buttons}>
-          <Button className={classes.btn} variant="contained" color="primary" onClick={handleClick}>
+          <Button className={classes.btn} variant="contained" color="secondary" onClick={handleClick}>
             Start
           </Button>
-          <Button className={classes.btn} variant="contained" color="primary" onClick={() => history.push('/register')}>
+          <Button
+            className={classes.btn}
+            variant="contained"
+            color="secondary"
+            onClick={() => history.push('/register')}
+          >
             Register
           </Button>
         </div>

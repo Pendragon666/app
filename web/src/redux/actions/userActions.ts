@@ -172,3 +172,28 @@ export const createProfile = (data: any) => (dispatch: any) => {
     });
   });
 };
+
+export const createTeam = (data: any) => (dispatch: any) => {
+  axios
+    .post('/api/team/v1/create', data)
+    .then((res) =>
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          show: true,
+          type: 'success',
+          message: res.data.message,
+        },
+      }),
+    )
+    .catch(() =>
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          show: true,
+          type: 'error',
+          message: 'something went wrong',
+        },
+      }),
+    );
+};

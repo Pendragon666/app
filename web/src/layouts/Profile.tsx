@@ -256,9 +256,9 @@ const ProfileLayout: React.FC<Props> = (props) => {
       <div className={classes.info}>
         <div className={classes.picture}>
           <img
-            src="https://thumbs.dreamstime.com/b/red-vector-man-profile-icon-illustration-117495649.jpg"
+            src={`https://avatars.dicebear.com/api/initials/:${profile.fullName}.svg`}
             alt="profile pic"
-            style={{ height: 85, width: 85, borderRadius: '50%', border: '0.5px solid red' }}
+            style={{ height: 85, width: 85, borderRadius: '50%' }}
           />
           <div
             style={{

@@ -1,4 +1,5 @@
 import ProfileLayout from './Profile';
 import CreateProfile from './CreateProfile';
+import TeamLayout from './Team';
 
-export { ProfileLayout, CreateProfile };
+export { ProfileLayout, CreateProfile, TeamLayout };

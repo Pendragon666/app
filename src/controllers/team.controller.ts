@@ -65,11 +65,13 @@ export const createTeam = async (req: Request, res: Response, next: NextFunction
         owner: req.user._id,
       });
 
+      await Profile.updateOne({ uid: req.user._id }, { inTeam: true });
+
       return res.status(201).json({ message: 'successTeam' });
     }
     res.status(400);
     return next({ message: 'failedTeamCreate' });
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === 11000) {
       res.status(400);
       return next({ ...error, message: 'alreadyExists' });

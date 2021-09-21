@@ -15,10 +15,10 @@ const styles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: "url('https://static2.lolwallpapers.net/2016/07/57868bc3a88f1.jpg')",
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: '70% 30%',
     backgroundSize: 'cover',
+    backgroundImage:
+      'url("https://www.lifewire.com/thmb/xWwU0qxUmS6CZ9Vqgx1zXTNvQEA=/1250x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/wallhaven-5919d60a5f9b58f4c04e8b26.png")',
   },
   form: {
     display: 'flex',
@@ -311,7 +311,7 @@ const Register: React.FC = (props: any) => {
             <>
               <TextField
                 className={classes.textField}
-                placeholder="ID Number"
+                placeholder="National ID"
                 type="text"
                 value={value.id.value}
                 autoComplete="nope"
@@ -392,7 +392,7 @@ const Register: React.FC = (props: any) => {
               />
               <TextField
                 className={classes.textField}
-                placeholder="Number"
+                placeholder="Phone Number"
                 type="text"
                 value={value.number.value}
                 error={value.number.error}
@@ -430,7 +430,10 @@ const Register: React.FC = (props: any) => {
             </>
           )}
 
-          <p style={{ marginLeft: 'auto', color: 'white', cursor: 'pointer' }} onClick={() => history.push('/login')}>
+          <p
+            style={{ marginLeft: 'auto', color: 'white', cursor: 'pointer', marginTop: 15 }}
+            onClick={() => history.push('/login')}
+          >
             Already an user? log in
           </p>
         </form>

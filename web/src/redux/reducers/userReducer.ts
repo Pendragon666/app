@@ -1,4 +1,12 @@
-import { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED, LOADING_USER, SET_CODE, SET_PROFILE } from '../types/user';
+import {
+  SET_USER,
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  LOADING_USER,
+  SET_CODE,
+  SET_PROFILE,
+  SET_TEAM,
+} from '../types/user';
 
 export interface UserState {
   authenticated: boolean;
@@ -18,6 +26,12 @@ export interface UserState {
     uid?: string;
     inTeam?: boolean;
   };
+  team: {
+    id?: string;
+    name?: string;
+    description?: string;
+    teamTag?: string;
+  };
   loading: boolean;
   code: {
     limited: boolean;
@@ -30,6 +44,7 @@ export const initialState: UserState = {
   user: {},
   profileCreated: false,
   profile: {},
+  team: {},
   loading: false,
   code: {
     limited: false,
@@ -68,6 +83,10 @@ export default function (state = initialState, action: any) {
         ...state,
         profile: action.payload,
         profileCreated: action.profileCreated,
+      };
+    case SET_TEAM:
+      return {
+        ...state,
       };
     default:
       return state;
